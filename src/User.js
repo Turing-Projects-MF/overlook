@@ -6,9 +6,23 @@ class User {
   }
 
   searchAvailability(date) {
-    //compare booking by date and return all rooms that are not booked
-    //filter to return available rooms
-    return this.bookings.filter(booking => booking.date !== date);
+    let bookedRooms = this.bookings.reduce((totalBookings, booking) => {
+      booking.date === date ? totalBookings.push(booking.roomNumber) : null
+      return totalBookings
+    }, []);
+    return this.rooms.filter(room => !bookedRooms.includes(room.number));
+  }
+
+
+  bookARoom(roomNumber, date) {
+    let findRoomToBook = this.rooms.find(room => room.number === roomNumber);
+    this.bookings.push({
+      "id": "5fwrgu4i7k55hl6sz",
+      "userID": 1,
+      "date": "2020/04/22",
+      "roomNumber": roomNumber,
+      "roomServiceCharges": []
+    })
   }
 }
 
