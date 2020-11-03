@@ -30,30 +30,30 @@ describe('User', function() {
     bookings = [
       {
         "id": "5fwrgu4i7k55hl6sz",
-        "userID": 9,
+        "userID": 1,
         "date": "2020/04/22",
-        "roomNumber": 15,
+        "roomNumber": 1,
         "roomServiceCharges": []
       },
       {
         "id": "5fwrgu4i7k55hl6t5",
-        "userID": 43,
-        "date": "2020/01/24",
-        "roomNumber": 24,
+        "userID": 2,
+        "date": "2020/01/10",
+        "roomNumber": 2,
         "roomServiceCharges": []
       },
       {
         "id": "5fwrgu4i7k55hl6t6",
-        "userID": 13,
+        "userID": 3,
         "date": "2020/01/10",
-        "roomNumber": 12,
+        "roomNumber": 3,
         "roomServiceCharges": []
       },
       {
         "id": "5fwrgu4i7k55hl6t7",
-        "userID": 20,
+        "userID": 4,
         "date": "2020/02/16",
-        "roomNumber": 7,
+        "roomNumber": 4,
         "roomServiceCharges": []
       }
     ];
@@ -120,8 +120,29 @@ describe('User', function() {
     expect(user.rooms).to.deep.equal(rooms);
   });
 
+  it('should be able to search availability by date', function() {
+    const availableRooms = [
+      {
+        "id": "5fwrgu4i7k55hl6sz",
+        "userID": 1,
+        "date": "2020/04/22",
+        "roomNumber": 1,
+        "roomServiceCharges": []
+      },
+      {
+        "id": "5fwrgu4i7k55hl6t7",
+        "userID": 4,
+        "date": "2020/02/16",
+        "roomNumber": 4,
+        "roomServiceCharges": []
+      }
+    ];
 
-})
+    expect(user.searchAvailability("2020/01/10")).to.deep.equal(availableRooms);
+  });
+
+
+});
 // - searchAvailability
 // - checkoutRoom
 // - deleteReservation - possibly
