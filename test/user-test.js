@@ -121,29 +121,63 @@ describe('User', function() {
   });
 
   it('should be able to search availability by date', function() {
-    const availableRooms = [
-      {
-        "id": "5fwrgu4i7k55hl6sz",
-        "userID": 1,
-        "date": "2020/04/22",
-        "roomNumber": 1,
-        "roomServiceCharges": []
-      },
-      {
-        "id": "5fwrgu4i7k55hl6t7",
-        "userID": 4,
-        "date": "2020/02/16",
-        "roomNumber": 4,
-        "roomServiceCharges": []
-      }
-    ];
 
-    expect(user.searchAvailability("2020/01/10")).to.deep.equal(availableRooms);
+    expect(user.searchAvailability("2020/01/10")).to.deep.equal([rooms[0], rooms[3]]);
   });
 
+  it('should be able to book a room', function() {
+    user.bookARoom(1, users[0], "2020/01/10");
+    let bookedRooms = [bookings[0], bookings[1], bookings[2], bookings[3], {
+      "id": "5fwrgu4i7k55hl6t7",
+      "userID": 1,
+      "date": "2020/01/10",
+      "roomNumber": 1,
+      "roomServiceCharges": []
+    }]
+    expect(user.bookings).to.deep.equal(bookedRooms)
+  });
 
+  it('should return booked room', function() {
+    expect(user.bookARoom(1, users[0], "2020/01/10")).to.deep.equal({
+      "id": "5fwrgu4i7k55hl6t7",
+      "userID": 1,
+      "date": "2020/01/10",
+      "roomNumber": 1,
+      "roomServiceCharges": []
+    })
+  });
+
+  it('should be able to remove a booking', function() {
+    user.cancelBooking(bookings[3]);
+    let bookedRooms = [bookings[0], bookings[1], bookings[2]]
+    expect(user.bookings).to.deep.equal(bookedRooms)
+  });
 });
-// - searchAvailability
+
 // - checkoutRoom
 // - deleteReservation - possibly
 // - getTotalSpent
+// const booking = [
+//   {
+//     "id": "5fwrgu4i7k55hl6sz",
+//     "userID": 1,
+//     "date": "2020/04/22",
+//     "roomNumber": 1,
+//     "roomServiceCharges": []
+//   },
+//   {
+//     "id": "5fwrgu4i7k55hl6t7",
+//     "userID": 4,
+//     "date": "2020/02/16",
+//     "roomNumber": 4,
+//     "roomServiceCharges": []
+//   }
+// ];
+// {
+//   "number": 1,
+//   "roomType": "residential suite",
+//   "bidet": true,
+//   "bedSize": "queen",
+//   "numBeds": 1,
+//   "costPerNight": 358.4
+// }

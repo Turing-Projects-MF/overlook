@@ -13,15 +13,24 @@ class User {
     return this.rooms.filter(room => !bookedRooms.includes(room.number));
   }
 
-
-  bookARoom(roomNumber, date) {
-    let findRoomToBook = this.rooms.find(room => room.number === roomNumber);
+  bookARoom(roomNumber, user, date) {
+    let roomToBook = this.rooms.find(room => room.number === roomNumber);
     this.bookings.push({
-      "id": "5fwrgu4i7k55hl6sz",
-      "userID": 1,
-      "date": "2020/04/22",
-      "roomNumber": roomNumber,
+      "id": "5fwrgu4i7k55hl6t7",
+      "userID": user.id,
+      "date": date,
+      "roomNumber": roomToBook.number,
       "roomServiceCharges": []
+    });
+    return this.bookings[this.bookings.length - 1];
+  }
+
+  cancelBooking(bookedRoom) {
+    let reservation = this.bookings.find(booking => booking === bookedRoom);
+    return this.bookings.forEach(booking => {
+      if (booking === reservation) {
+        this.bookings.splice(reservation, 1);
+      }
     })
   }
 }
