@@ -133,7 +133,8 @@ describe('User', function() {
       "date": "2020/01/10",
       "roomNumber": 1,
       "roomServiceCharges": []
-    }]
+    }];
+
     expect(user.bookings).to.deep.equal(bookedRooms)
   });
 
@@ -149,35 +150,19 @@ describe('User', function() {
 
   it('should be able to remove a booking', function() {
     user.cancelBooking(bookings[3]);
-    let bookedRooms = [bookings[0], bookings[1], bookings[2]]
-    expect(user.bookings).to.deep.equal(bookedRooms)
+    let bookedRooms = [bookings[0], bookings[1], bookings[2]];
+
+    expect(user.bookings).to.deep.equal(bookedRooms);
+  });
+
+  it('should be able to return removed booking', function() {
+    const bookedRoom = bookings[3];
+    const cancelReservation = user.cancelBooking(bookings[3]);
+
+    expect(cancelReservation).to.deep.equal(bookedRoom);
+  });
+
+  it('should calculate total spent', function() {
+    expect(user.calculateTotalSpent(bookings)).to.equal(1756.36);
   });
 });
-
-// - checkoutRoom
-// - deleteReservation - possibly
-// - getTotalSpent
-// const booking = [
-//   {
-//     "id": "5fwrgu4i7k55hl6sz",
-//     "userID": 1,
-//     "date": "2020/04/22",
-//     "roomNumber": 1,
-//     "roomServiceCharges": []
-//   },
-//   {
-//     "id": "5fwrgu4i7k55hl6t7",
-//     "userID": 4,
-//     "date": "2020/02/16",
-//     "roomNumber": 4,
-//     "roomServiceCharges": []
-//   }
-// ];
-// {
-//   "number": 1,
-//   "roomType": "residential suite",
-//   "bidet": true,
-//   "bedSize": "queen",
-//   "numBeds": 1,
-//   "costPerNight": 358.4
-// }

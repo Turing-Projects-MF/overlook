@@ -26,12 +26,22 @@ class User {
   }
 
   cancelBooking(bookedRoom) {
-    let reservation = this.bookings.find(booking => booking === bookedRoom);
-    return this.bookings.forEach(booking => {
+    const reservation = this.bookings.find(booking => booking === bookedRoom);
+    this.bookings.forEach(booking => {
       if (booking === reservation) {
         this.bookings.splice(reservation, 1);
       }
     })
+    return reservation;
+  }
+  calculateTotalSpent(bookingsData) {
+    let expense = bookingsData.reduce((totalSpent, booking) => {
+      this.rooms.forEach(room => {
+        room.number === booking.roomNumber ? totalSpent += room.costPerNight : null;
+      })
+      return totalSpent
+    }, 0)
+    return Math.round(expense * 100) / 100
   }
 }
 
