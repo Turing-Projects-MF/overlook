@@ -109,6 +109,18 @@ describe('Manager', function() {
     expect(users, bookings, rooms).to.be.instanceof(Array);
   });
 
+  it('should have a list of all users', function() {
+    expect(manager.users).to.deep.equal(users);
+  });
+
+  it('should have a list of all bookings', function() {
+    expect(manager.bookings).to.deep.equal(bookings);
+  });
+
+  it('should have a list of all rooms', function() {
+    expect(manager.rooms).to.deep.equal(rooms);
+  });
+
   it('should find a guest by name', function() {
     expect(manager.findGuestByName("Leatha Ullrich")).to.deep.equal(users[0]);
   });
