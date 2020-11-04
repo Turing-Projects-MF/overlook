@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import User from '../src/User';
 
-describe('User', function() {
+describe.only('User', function() {
   let user;
   let users;
   let bookings;
@@ -120,9 +120,24 @@ describe('User', function() {
     expect(user.rooms).to.deep.equal(rooms);
   });
 
-  it('should be able to search availability by date', function() {
+  it('should find booked rooms by date', function() {
+    expect(user.findBookedRooms("2020/01/10")).to.deep.equal([2, 3]);
+  });
 
+  it('should filter out booked rooms on a date', function() {
+    const bookedRooms = user.findBookedRooms("2020/01/10");
+    const filteredRooms = user.filterBookedRooms(bookedRooms);
+    expect(filteredRooms).to.deep.equal([rooms[0], rooms[3]])
+  });
+
+  it('should be able to search availability by date', function() {
     expect(user.searchAvailability("2020/01/10")).to.deep.equal([rooms[0], rooms[3]]);
+  });
+
+  it('should should apologize if there are no rooms available', function() {
+    const user2 = new User(users, bookings, []);
+    const message = 'We are deeply sorry that we do not have any rooms available on 2020/11/03';
+    expect(user2.searchAvailability("2020/11/03")).to.equal(message);
   });
 
   it('should be able to book a room', function() {
