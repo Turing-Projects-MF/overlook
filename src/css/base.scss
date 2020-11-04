@@ -13,7 +13,7 @@ body {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
-  position: relative;
+  background-attachment: fixed;
   h1 {
     color: $primary-text-color;
   }
@@ -144,5 +144,71 @@ span.psw {
 .body__manager__dash {
   background-color: #D4D0AB;
   margin: auto;
-  width: 80%;
+  width: 90%;
+  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  article {
+    flex-grow: 1;
+    height: 450px;
+    width: 300px;
+    border: solid;
+  }
 }
+
+input[type=text] {
+  margin-left: 5%;
+  width: 150px;
+  -webkit-transition: width 0.4s ease-in-out;
+  transition: width 0.4s ease-in-out;
+}
+
+/* When the input field gets focus, change its width to 100% */
+input[type=text]:focus {
+  //update in media query
+  width: 30%;
+}
+
+//user search results view
+.body__manager__user__view {
+  display: flex;
+}
+
+.body__manager__user__wrapper {
+  display: flex;
+  flex-direction: column;
+  margin: 0 2.5% 0 5%;
+  width: 50%;
+  .body__manager__user__wrapper__article {
+    background-color: $dashboard-background-color;
+    width: 100%;
+  }
+}
+
+#manager-guest-name {
+  height: 50px;
+  margin: 10px 0;
+}
+
+#manager-guest-spent {
+  height: 100px;
+}
+
+.body__manager__user__section {
+  background-color: $dashboard-background-color;
+  width: 50%;
+  margin: 10px 5% 0 2.5%;
+  height: 500px;
+  .body_manager__user__booking {
+    background-color: #c6c29b;
+    margin: 20px 2.5%;
+    height: 100px;
+    box-shadow: 5px 10px #888888;
+  }
+}
+
+label {
+  color: $primary-text-color;
+}
+
