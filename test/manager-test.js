@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import Manager from '../src/Manager';
 
-describe.only('Manager', function() {
+describe('Manager', function() {
   let manager;
   let users;
   let bookings;
@@ -100,7 +100,7 @@ describe.only('Manager', function() {
     expect(Manager).to.be.a('function');
   });
 
-  it('should be an instance of User', function() {
+  it('should be an instance of Manager', function() {
 
     expect(manager).to.be.an.instanceof(Manager);
   });
