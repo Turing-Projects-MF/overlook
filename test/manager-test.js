@@ -101,10 +101,21 @@ describe.only('Manager', function() {
   });
 
   it('should be an instance of User', function() {
+
     expect(manager).to.be.an.instanceof(Manager);
   });
 
   it('should only take in arrays as arguments', function() {
     expect(users, bookings, rooms).to.be.instanceof(Array);
   });
+
+  it('should be able to search for a user by name', function() {
+    let searchGuest = manager.searchForGuest("Leatha Ullrich");
+
+    expect(searchGuest).to.deep.equal({
+      guest: users[0].name,
+      bookings: [bookings[0]],
+      spent: 358.4
+    })
+  })
 });
