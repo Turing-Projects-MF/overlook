@@ -171,7 +171,7 @@ input[type=text]:focus {
 }
 
 //user search results view
-.body__manager__user__view {
+.body__manager__user__view, .body__guest__user__view {
   display: flex;
 }
 
@@ -195,12 +195,12 @@ input[type=text]:focus {
   height: 100px;
 }
 
-.body__manager__user__section {
+.body__manager__user__section, .body__guest__user__section {
   background-color: $dashboard-background-color;
   width: 50%;
   margin: 10px 5% 0 2.5%;
-  height: 500px;
-  .body_manager__user__booking {
+  height: auto;
+  .body__manager__user__booking, .body__guest__user__booking {
     background-color: #c6c29b;
     margin: 20px 2.5%;
     height: 100px;
