@@ -109,8 +109,17 @@ describe.only('Manager', function() {
     expect(users, bookings, rooms).to.be.instanceof(Array);
   });
 
-  it('should be able to search for a user by name', function() {
-    let searchGuest = manager.searchForGuest("Leatha Ullrich");
+  it('should find a guest by name', function() {
+    expect(manager.findGuestByName("Leatha Ullrich")).to.deep.equal(users[0]);
+  });
+
+  it('should find a guest\s bookings', function() {
+    const findGuest = manager.findGuestByName("Leatha Ullrich");
+    expect(manager.findGuestsBooking(findGuest)).to.deep.equal([bookings[0]]);
+  });
+
+  it('should be able to a guest\s bookings and total spent by their name', function() {
+    const searchGuest = manager.searchForGuest("Leatha Ullrich");
 
     expect(searchGuest).to.deep.equal({
       guest: users[0].name,
