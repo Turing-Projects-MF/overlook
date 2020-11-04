@@ -6,7 +6,7 @@ class User {
   }
 
   searchAvailability(date) {
-    let bookedRooms = this.bookings.reduce((totalBookings, booking) => {
+    const bookedRooms = this.bookings.reduce((totalBookings, booking) => {
       booking.date === date ? totalBookings.push(booking.roomNumber) : null
       return totalBookings
     }, []);
@@ -14,7 +14,7 @@ class User {
   }
 
   bookARoom(roomNumber, user, date) {
-    let roomToBook = this.rooms.find(room => room.number === roomNumber);
+    const roomToBook = this.rooms.find(room => room.number === roomNumber);
     this.bookings.push({
       "id": "5fwrgu4i7k55hl6t7",
       "userID": user.id,
@@ -35,13 +35,13 @@ class User {
     return reservation;
   }
   calculateTotalSpent(bookingsData) {
-    let expense = bookingsData.reduce((totalSpent, booking) => {
+    const expense = bookingsData.reduce((totalSpent, booking) => {
       this.rooms.forEach(room => {
         room.number === booking.roomNumber ? totalSpent += room.costPerNight : null;
       })
-      return totalSpent
+      return totalSpent;
     }, 0)
-    return Math.round(expense * 100) / 100
+    return Math.round(expense * 100) / 100;
   }
 }
 
