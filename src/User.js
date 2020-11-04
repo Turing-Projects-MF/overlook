@@ -6,10 +6,23 @@ class User {
   }
 
   searchAvailability(date) {
-    const bookedRooms = this.bookings.reduce((totalBookings, booking) => {
+    const bookedRoomsOnDate = this.findBookedRooms(date);
+    const availableRoomsOnDate = this.filterBookedRooms(bookedRoomsOnDate);
+    if (!availableRoomsOnDate.length) {
+      return (`We are deeply sorry that we do not have any rooms available on ${date}`)
+    } else {
+      return availableRoomsOnDate;
+    }
+  }
+
+  findBookedRooms(date) {
+    return this.bookings.reduce((totalBookings, booking) => {
       booking.date === date ? totalBookings.push(booking.roomNumber) : null
       return totalBookings
     }, []);
+  }
+
+  filterBookedRooms(bookedRooms) {
     return this.rooms.filter(room => !bookedRooms.includes(room.number));
   }
 
@@ -34,6 +47,7 @@ class User {
     })
     return reservation;
   }
+
   calculateTotalSpent(bookingsData) {
     const expense = bookingsData.reduce((totalSpent, booking) => {
       this.rooms.forEach(room => {
@@ -42,6 +56,12 @@ class User {
       return totalSpent;
     }, 0)
     return Math.round(expense * 100) / 100;
+  }
+
+  findGuestsBooking(guest) {
+    return this.bookings.filter(booking => {
+      return booking.userID === guest.id;
+    });
   }
 }
 
