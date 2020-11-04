@@ -6,12 +6,24 @@ class Manager extends User {
   }
 
   searchForGuest(name) {
-    let guest = this.users.find(user => user.name === name);
-    let currentBookings = this.bookings.filter(booking => {
+    let guest = this.findGuestByName(name);
+    let currentBookings = this.findGuestsBooking(guest);
+    let totalSpent = this.calculateTotalSpent(currentBookings);
+    return {
+      guest: guest.name,
+      bookings: currentBookings,
+      spent: totalSpent
+    }
+  }
+
+  findGuestByName(name) {
+    return this.users.find(user => user.name === name);
+  }
+
+  findGuestsBooking(guest) {
+    return this.bookings.filter(booking => {
       return booking.userID === guest.id;
     });
-    let totalSpent = this.calculateTotalSpent(currentBookings);
-    return {guest: guest.name, bookings: currentBookings, spent: totalSpent}
   }
 }
 
