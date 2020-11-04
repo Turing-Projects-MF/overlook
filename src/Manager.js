@@ -19,12 +19,6 @@ class Manager extends User {
   findGuestByName(name) {
     return this.users.find(user => user.name === name);
   }
-
-  findGuestsBooking(guest) {
-    return this.bookings.filter(booking => {
-      return booking.userID === guest.id;
-    });
-  }
 }
 
 export default Manager;
