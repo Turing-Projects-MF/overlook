@@ -23,17 +23,48 @@
       </div>
     </section>
     <!-- Manager dashboard -->
-    <section class="body__manager__dash">
-      <article class="body__manager__dash__article" id="rooms-available">
-        <p>Show Rooms Available</p>
-      </article>
-      <article class="body__manager__dash__article" id="today-revenue">
-        <p>Show Today's Revenue</p>
-      </article>
-      <article class="body__manager__dash__article" id="room-occupied">
-        <p>Show % Occupied</p>
-      </article>
+    <section class="body__manager">
+      <section class="body__manager__dash">
+        <article class="body__manager__dash__article" id="rooms-available">
+          <p>Show Rooms Available</p>
+          <div>Data Here</div>
+        </article>
+        <article class="body__manager__dash__article" id="today-revenue">
+          <p>Show Today's Revenue</p>
+          <div>Data Here</div>
+        </article>
+        <article class="body__manager__dash__article" id="room-occupied">
+          <p>Show % Occupied</p>
+          <div>Data Here</div>
+        </article>
+      </section>
 
+      <!-- ARIA LABEL HELP -->
+
+      <input type="text" aria-required="false" id="search-guest" placeholder="Search..">
+      <label for="search-guest">Enter Guest Name</label>
+      <!-- show guest details -->
+      <section class="body__manager__user__view">
+
+        <div class="body__manager__user__wrapper">
+          <article class="body__manager__user__wrapper__article" id="manager-guest-name">
+            GUEST NAME
+          </article>
+          <article class="body__manager__user__wrapper__article" id="manager-guest-spent">
+            $$$$$$$$
+          </article>
+        </div>
+
+        <section class="body__manager__user__section">
+          <article class="body_manager__user__booking">
+            BOOKING DETAILS
+          </article>
+          <article class="body_manager__user__booking">
+            BOOKING DETAILS
+          </article>
+        </section>
+
+      </section>
     </section>
     <!-- Do not include the index.js or main.bundle.js file here - it is done automatically by the webpack server -->
   </body>
