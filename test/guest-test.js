@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import Guest from '../src/Guest';
 
-describe.only('Guest', function() {
+describe('Guest', function() {
   let guest;
   let users;
   let bookings;
@@ -93,10 +93,11 @@ describe.only('Guest', function() {
       }
     ];
 
-    guest = new Guest(users, bookings, rooms);
+    guest = new Guest(users, bookings, rooms, users[0]);
   })
 
   it('should be a function', function() {
+
     expect(Guest).to.be.a('function');
   });
 
@@ -106,8 +107,38 @@ describe.only('Guest', function() {
   });
 
   it('should only take in arrays as arguments', function() {
-    console.log(guest);
     expect(users, bookings, rooms).to.be.instanceof(Array);
   });
 
+  it('should have a list of all users', function() {
+    expect(guest.users).to.deep.equal(users);
+  });
+
+  it('should have a list of all bookings', function() {
+    expect(guest.bookings).to.deep.equal(bookings);
+  });
+
+  it('should have a list of all rooms', function() {
+    expect(guest.rooms).to.deep.equal(rooms);
+  });
+
+  it('should have a current user', function() {
+    expect(guest.currentUser).to.deep.equal(users[0]);
+  });
+
+  it('should get a current user\s bookings', function() {
+    expect(guest.getCurrentBookings()).to.deep.equal([bookings[0]]);
+  });
+
+  it('should be able to filter room by type', function() {
+    const filteredRoom = guest.filterRoomByType('single room');
+    expect(filteredRoom).to.deep.equal([rooms[2], rooms[3]])
+  });
+
+  it('should apologize if there is room of that type available', function() {
+    const filteredRoom = guest.filterRoomByType('penthouse');
+    const message = `We are deeply sorry that we do not have any penthouse\s available`;
+
+    expect(filteredRoom).to.equal(message);
+  });
 });
