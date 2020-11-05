@@ -59,7 +59,8 @@ function displayDashboard(e) {
   if (loginUsername.value.includes('manager')) {
     managerDashboard.classList.remove('hidden');
     createManager();
-    console.log(manager);
+    displayAvailableRooms("2020/04/22");
+    displayTodaysRevenue("2020/04/22");
   } else if (loginUsername.value.includes('customer')) {
     main.classList.remove('hidden');
     guestBookingview.classList.remove('hidden');
@@ -87,3 +88,14 @@ function createManager() {
     manager = new Manager(usersData, bookingsData, roomsData);
   }
 }
+
+function displayAvailableRooms(date) {
+  const availableRooms = manager.searchAvailability(date);
+  document.querySelector('.body__manager__available__rooms').innerText = `${availableRooms.length}`;
+}
+
+function displayTodaysRevenue(date) {
+  const totalRevenue = manager.getTodaysRevenue(date);
+  document.querySelector('.body__manager__total__revenue').innerText = `${totalRevenue}`;
+}
+
