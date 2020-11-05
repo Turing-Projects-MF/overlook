@@ -61,6 +61,7 @@ function displayDashboard(e) {
     createManager();
     displayAvailableRooms("2020/04/22");
     displayTodaysRevenue("2020/04/22");
+    displayPercentOccupied("2020/04/22");
   } else if (loginUsername.value.includes('customer')) {
     main.classList.remove('hidden');
     guestBookingview.classList.remove('hidden');
@@ -99,3 +100,7 @@ function displayTodaysRevenue(date) {
   document.querySelector('.body__manager__total__revenue').innerText = `${totalRevenue}`;
 }
 
+function displayPercentOccupied(date) {
+  let totalPercent = manager.getPercentOccupied(date) * 100;
+  document.querySelector('.body__manager__total__percent').innerText = `${totalPercent}%`;
+}
