@@ -134,12 +134,12 @@ span.psw {
 
 
 /* Change styles for span and cancel button on extra small screens */
-@media screen and (max-width: 300px) {
-  span.psw {
-     display: block;
-     float: none;
-  }
-}
+// @media screen and (max-width: 300px) {
+//   span.psw {
+//      display: block;
+//      float: none;
+//   }
+// }
 
 //Dashboards
 .body__manager__dash {
@@ -152,7 +152,7 @@ span.psw {
   flex-wrap: wrap;
   article {
     flex-grow: 1;
-    height: 450px;
+    height: 225px;
     width: 300px;
     border: solid;
   }
@@ -316,5 +316,18 @@ main {
   }
   100% {
     opacity:1;
+  }
+}
+
+@media (max-width: 950px) {
+  .body__manager__user__view {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 5%;
+    width: 100%;
+  }
+  .body__manager__user__wrapper {
+    margin-right: 55px;
   }
 }
