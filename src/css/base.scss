@@ -16,6 +16,7 @@ body {
   background-attachment: fixed;
   h1 {
     color: $primary-text-color;
+
   }
 }
 
@@ -213,6 +214,12 @@ span.psw {
   width: 100%;
 }
 
+.main__guest__wrapper, .body__guest__user__booking {
+  color: #3455DB;
+  font-family: 'Roboto', sans-serif;
+  font-size: 24px;
+}
+
 #guest-bookings {
   display: flex;
   flex-direction: column;
@@ -236,6 +243,7 @@ label {
   background-repeat: no-repeat; /* Do not repeat the image */
   background-size: cover;
   color: #96281B;
+  font-family: 'Roboto', sans-serif;
   font-size: 40px;
   font-weight: bolder;
   text-shadow: 1px 1px #FFFAFA;
@@ -245,19 +253,19 @@ label {
 }
 
 #suite {
-  background-image: url("../../assets/junior-suite.jpg");
+  background-image: url("../../assets/suite.jpg");
 }
 
 #sing-room {
-
+  background-image: url("../../assets/single-room.jpg");
 }
 
 #res-suite {
-
+  background-image: url("../../assets/res-suite.jpg");
 }
 
 #jun-suite {
-
+  background-image: url("../../assets/junior-suite.jpg");
 }
 
 #filter-section {
@@ -277,3 +285,36 @@ main {
   margin: 0 2.5%;
 }
 
+.fade-in {
+  animation: fadeIn ease 5s;
+  -webkit-animation: fadeIn ease 5s;
+  -moz-animation: fadeIn ease 5s;
+  -o-animation: fadeIn ease 5s;
+  -ms-animation: fadeIn ease 5s;
+}
+@keyframes fadeIn {
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
+}
+
+@-moz-keyframes fadeIn {
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
+}
+
+@-webkit-keyframes fadeIn {
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
+}
