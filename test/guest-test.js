@@ -1,13 +1,13 @@
 import { expect } from 'chai';
 import Guest from '../src/Guest';
 
-describe('Guest', function() {
+describe('Guest', () => {
   let guest;
   let users;
   let bookings;
   let rooms;
 
-  beforeEach(function() {
+  beforeEach(() => {
     users = [
       {
         "id": 1,
@@ -96,46 +96,46 @@ describe('Guest', function() {
     guest = new Guest(users, bookings, rooms, users[0]);
   })
 
-  it('should be a function', function() {
+  it('should be a function', () => {
 
     expect(Guest).to.be.a('function');
   });
 
-  it('should be an instance of Guest', function() {
+  it('should be an instance of Guest', () => {
 
     expect(guest).to.be.an.instanceof(Guest);
   });
 
-  it('should only take in arrays as arguments', function() {
+  it('should only take in arrays as arguments', () => {
     expect(users, bookings, rooms).to.be.instanceof(Array);
   });
 
-  it('should have a list of all users', function() {
+  it('should have a list of all users', () => {
     expect(guest.users).to.deep.equal(users);
   });
 
-  it('should have a list of all bookings', function() {
+  it('should have a list of all bookings', () => {
     expect(guest.bookings).to.deep.equal(bookings);
   });
 
-  it('should have a list of all rooms', function() {
+  it('should have a list of all rooms', () => {
     expect(guest.rooms).to.deep.equal(rooms);
   });
 
-  it('should have a current user', function() {
+  it('should have a current user', () => {
     expect(guest.currentUser).to.deep.equal(users[0]);
   });
 
-  it('should get a current user\s bookings', function() {
+  it('should get a current user\s bookings', () => {
     expect(guest.getCurrentBookings()).to.deep.equal([bookings[0]]);
   });
 
-  it('should be able to filter room by type', function() {
+  it('should be able to filter room by type', () => {
     const filteredRoom = guest.filterRoomByType('single room');
     expect(filteredRoom).to.deep.equal([rooms[2], rooms[3]])
   });
 
-  it('should apologize if there is room of that type available', function() {
+  it('should apologize if there is room of that type available', () => {
     const filteredRoom = guest.filterRoomByType('penthouse');
     const message = `We are deeply sorry that we do not have any penthouse\s available`;
 

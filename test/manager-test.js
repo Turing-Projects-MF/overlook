@@ -1,13 +1,13 @@
 import { expect } from 'chai';
 import Manager from '../src/Manager';
 
-describe('Manager', function() {
+describe('Manager', () => {
   let manager;
   let users;
   let bookings;
   let rooms;
 
-  beforeEach(function() {
+  beforeEach(() => {
     users = [
       {
         "id": 1,
@@ -96,41 +96,41 @@ describe('Manager', function() {
     manager = new Manager(users, bookings, rooms);
   });
 
-  it('should be a function', function() {
+  it('should be a function', () => {
     expect(Manager).to.be.a('function');
   });
 
-  it('should be an instance of Manager', function() {
+  it('should be an instance of Manager', () => {
 
     expect(manager).to.be.an.instanceof(Manager);
   });
 
-  it('should only take in arrays as arguments', function() {
+  it('should only take in arrays as arguments', () => {
     expect(users, bookings, rooms).to.be.instanceof(Array);
   });
 
-  it('should have a list of all users', function() {
+  it('should have a list of all users', () => {
     expect(manager.users).to.deep.equal(users);
   });
 
-  it('should have a list of all bookings', function() {
+  it('should have a list of all bookings', () => {
     expect(manager.bookings).to.deep.equal(bookings);
   });
 
-  it('should have a list of all rooms', function() {
+  it('should have a list of all rooms', () => {
     expect(manager.rooms).to.deep.equal(rooms);
   });
 
-  it('should find a guest by name', function() {
+  it('should find a guest by name', () => {
     expect(manager.findGuestByName("Leatha Ullrich")).to.deep.equal(users[0]);
   });
 
-  it('should find a guest\s bookings', function() {
+  it('should find a guest\s bookings', () => {
     const findGuest = manager.findGuestByName("Leatha Ullrich");
     expect(manager.findGuestsBooking(findGuest)).to.deep.equal([bookings[0]]);
   });
 
-  it('should be able to a guest\s bookings and total spent by their name', function() {
+  it('should be able to a guest\s bookings and total spent by their name', () => {
     const searchGuest = manager.searchForGuest("Leatha Ullrich");
 
     expect(searchGuest).to.deep.equal({
