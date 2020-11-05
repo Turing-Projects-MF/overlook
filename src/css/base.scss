@@ -57,7 +57,7 @@ button:hover {
 
 /* Center the image and position the close button */
 // .imgcontainer {
-//   text-align: center;
+//  text-align: center;
 //   margin: 24px 0 12px 0;
 //   position: relative;
 // }
@@ -65,7 +65,7 @@ button:hover {
 // img.avatar {
 //   width: 40%;
 //   border-radius: 50%;
-// }
+//  }
 
 .container {
   padding: 16px;
@@ -157,7 +157,7 @@ span.psw {
   }
 }
 
-input[type=text] {
+#search-guest {
   margin-left: 5%;
   width: 150px;
   -webkit-transition: width 0.4s ease-in-out;
@@ -165,28 +165,28 @@ input[type=text] {
 }
 
 /* When the input field gets focus, change its width to 100% */
-input[type=text]:focus {
+#search-guest:focus {
   //update in media query
   width: 30%;
 }
 
 //user search results view
-.body__manager__user__view, .body__guest__user__view {
+.body__manager__user__view {
   display: flex;
 }
 
-.body__manager__user__wrapper {
+.body__manager__user__wrapper, .main__guest__wrapper {
   display: flex;
   flex-direction: column;
   margin: 0 2.5% 0 5%;
   width: 50%;
-  .body__manager__user__wrapper__article {
+  .body__manager__user__wrapper__article, .main__guest__wrapper__article {
     background-color: $dashboard-background-color;
     width: 100%;
   }
 }
 
-#manager-guest-name {
+#manager-guest-name, #guest-name {
   height: 50px;
   margin: 10px 0;
 }
@@ -195,12 +195,13 @@ input[type=text]:focus {
   height: 100px;
 }
 
-.body__manager__user__section, .body__guest__user__section {
+.body__manager__user__section, .body__guest__user__section, .main__guest__wrapper {
   background-color: $dashboard-background-color;
+  border-radius: 5px;
   width: 50%;
   margin: 10px 5% 0 2.5%;
   height: auto;
-  .body__manager__user__booking, .body__guest__user__booking {
+  .body__manager__user__booking {
     background-color: #c6c29b;
     margin: 20px 2.5%;
     height: 100px;
@@ -208,7 +209,55 @@ input[type=text]:focus {
   }
 }
 
+.body__guest__user__section, .main__guest__wrapper {
+  width: 100%;
+}
+
+#guest-bookings {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.body__guest__user__booking {
+  background-color: #c6c29b;
+  height: 120px;
+  width: 98%;
+
+  box-shadow: 5px 10px #888888;
+}
+
 label {
   color: $primary-text-color;
 }
 
+.filter-buttons {
+  background-image: url("../../assets/junior-suite.jpg");
+  background-position: center center; /* Center the image */
+  background-repeat: no-repeat; /* Do not repeat the image */
+  background-size: cover;
+  border-radius: 5px;
+  padding: 100px;
+  margin: 0 0 20px 0;
+}
+
+#filter-section {
+  background-color: transparent;
+}
+
+main {
+  width: 100%;
+}
+.wrapper {
+  display: flex;
+  width: 100%;
+}
+
+#bookings-view {
+  width: 100%;
+  margin: 0 2.5%;
+}
+
+#filter-text {
+
+}
