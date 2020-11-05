@@ -1,13 +1,114 @@
 <!DOCTYPE html>
 <html lang="en-US">
   <head>
-    <title>Webpack Starter Kit</title>
+    <title>Overlook</title>
   </head>
   <body>
-    <h1>Webpack Starter Kit</h1>
+    <h1 class="body__welcome">Welcome to Overlook</h1>
+    <section class="body__login hidden">
+      <!-- add hidden to section to hide body -->
+      <h2>Modal Login Form</h2>
+      <!-- login form modal -->
+      <button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Login</button>
+      <div id="id01" class="modal">
+        <form class="modal-content animate" action="/action_page.php" method="post">
+          <div class="container">
+            <label for="uname"><b>Username</b></label>
+            <input type="text" placeholder="Enter Username" name="uname" required>
+            <label for="psw"><b>Password</b></label>
+            <input type="password" placeholder="Enter Password" name="psw" required>
+            <button class="login-button" type="submit">Login</button>
+          </div>
+        </form>
+      </div>
+    </section>
+    <!-- Manager dashboard -->
+    <section class="body__manager hidden">
+      <!-- add hidden to top section -->
+      <section class="body__manager__dash">
+        <article class="body__manager__dash__article" id="rooms-available">
+          <p>Show Rooms Available</p>
+          <div>Data Here</div>
+        </article>
+        <article class="body__manager__dash__article" id="today-revenue">
+          <p>Show Today's Revenue</p>
+          <div>Data Here</div>
+        </article>
+        <article class="body__manager__dash__article" id="room-occupied">
+          <p>Show % Occupied</p>
+          <div>Data Here</div>
+        </article>
+      </section>
 
-    <img src="./images/turing-logo.png" alt="turing logo" height="100px" width="100px">
+      <!-- ARIA LABEL HELP -->
 
+      <input type="text" aria-required="false" id="search-guest" placeholder="Search..">
+      <label for="search-guest">Enter Guest Name</label>
+      <!-- show guest details -->
+      <section class="body__manager__user__view">
+
+        <div class="body__manager__user__wrapper">
+          <article class="body__manager__user__wrapper__article" id="manager-guest-name">
+            GUEST NAME
+          </article>
+          <article class="body__manager__user__wrapper__article" id="manager-guest-spent">
+            $$$$$$$$
+          </article>
+        </div>
+
+        <section class="body__manager__user__section">
+          <article class="body__manager__user__booking">
+            BOOKING DETAILS
+          </article>
+          <article class="body__manager__user__booking">
+            BOOKING DETAILS
+          </article><article class="body_manager__user__booking">
+            BOOKING DETAILS
+          </article>
+        </section>
+
+      </section>
+    </section>
+    <div class="wrapper">
+    <main>
+        <div class="main__guest__wrapper">
+          <article class="main__guest__wrapper__article" id="guest-name">
+            TOTAL SPENT
+          </article>
+        </div>
+        <section class="body__guest__user__view">
+          <section class="body__guest__user__section" id="guest-bookings">
+            <button class="body__guest__user__booking">
+              BOOKING DETAILS
+            </button>
+            <button class="body__guest__user__booking">
+              BOOKING DETAILS
+            </button>
+            <button class="body__guest__user__booking">
+              BOOKING DETAILS
+            </button>
+          </section>
+        </section>
+    </main>
+
+      <section class="body__guest__user__view" id="bookings-view">
+
+        <section class="body__guest__user__section" id="filter-section">
+          <div class="main__guest__filter__button">
+            <button class="filter-buttons" id="suite">Suite</button>
+          </div>
+          <div class="main__guest__filter__button">
+            <button class="filter-buttons" id="sing-room">Single Room</button>
+          </div>
+          <div class="main__guest__filter__button">
+            <button class="filter-buttons" id="res-suite">Residential<br>Suite</button>
+          </div>
+          <div class="main__guest__filter__button">
+            <button class="filter-buttons" id="jun-suite">Junior Suite</button>
+          </div>
+        </section>
+     </section>
+    </div>
     <!-- Do not include the index.js or main.bundle.js file here - it is done automatically by the webpack server -->
   </body>
 </html>

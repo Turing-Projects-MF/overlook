@@ -1,13 +1,13 @@
 import { expect } from 'chai';
 import User from '../src/User';
 
-describe.only('User', function() {
+describe('User', () => {
   let user;
   let users;
   let bookings;
   let rooms;
 
-  beforeEach(function() {
+  beforeEach(() => {
     users = [
       {
         "id": 1,
@@ -96,51 +96,51 @@ describe.only('User', function() {
     user = new User(users, bookings, rooms);
   });
 
-  it('should be a function', function() {
+  it('should be a function', () => {
     expect(User).to.be.a('function');
   });
 
-  it('should be an instance of User', function() {
+  it('should be an instance of User', () => {
     expect(user).to.be.an.instanceof(User);
   });
 
-  it('should only take in arrays as arguments', function() {
+  it('should only take in arrays as arguments', () => {
     expect(users, bookings, rooms).to.be.instanceof(Array);
   });
 
-  it('should contain data for all users', function() {
+  it('should contain data for all users', () => {
     expect(user.users).to.deep.equal(users);
   });
 
-  it('should contain data for all bookings', function() {
+  it('should contain data for all bookings', () => {
     expect(user.bookings).to.deep.equal(bookings);
   });
 
-  it('should contain data for all rooms', function() {
+  it('should contain data for all rooms', () => {
     expect(user.rooms).to.deep.equal(rooms);
   });
 
-  it('should find booked rooms by date', function() {
+  it('should find booked rooms by date', () => {
     expect(user.findBookedRooms("2020/01/10")).to.deep.equal([2, 3]);
   });
 
-  it('should filter out booked rooms on a date', function() {
+  it('should filter out booked rooms on a date', () => {
     const bookedRooms = user.findBookedRooms("2020/01/10");
     const filteredRooms = user.filterBookedRooms(bookedRooms);
     expect(filteredRooms).to.deep.equal([rooms[0], rooms[3]])
   });
 
-  it('should be able to search availability by date', function() {
+  it('should be able to search availability by date', () => {
     expect(user.searchAvailability("2020/01/10")).to.deep.equal([rooms[0], rooms[3]]);
   });
 
-  it('should should apologize if there are no rooms available', function() {
+  it('should should apologize if there are no rooms available', () => {
     const user2 = new User(users, bookings, []);
     const message = 'We are deeply sorry that we do not have any rooms available on 2020/11/03';
     expect(user2.searchAvailability("2020/11/03")).to.equal(message);
   });
 
-  it('should be able to book a room', function() {
+  it('should be able to book a room', () => {
     user.bookARoom(1, users[0], "2020/01/10");
     let bookedRooms = [bookings[0], bookings[1], bookings[2], bookings[3], {
       "id": "5fwrgu4i7k55hl6t7",
@@ -153,7 +153,7 @@ describe.only('User', function() {
     expect(user.bookings).to.deep.equal(bookedRooms)
   });
 
-  it('should return booked room', function() {
+  it('should return booked room', () => {
     expect(user.bookARoom(1, users[0], "2020/01/10")).to.deep.equal({
       "id": "5fwrgu4i7k55hl6t7",
       "userID": 1,
@@ -163,21 +163,21 @@ describe.only('User', function() {
     })
   });
 
-  it('should be able to remove a booking', function() {
+  it('should be able to remove a booking', () => {
     user.cancelBooking(bookings[3]);
     let bookedRooms = [bookings[0], bookings[1], bookings[2]];
 
     expect(user.bookings).to.deep.equal(bookedRooms);
   });
 
-  it('should be able to return removed booking', function() {
+  it('should be able to return removed booking', () => {
     const bookedRoom = bookings[3];
     const cancelReservation = user.cancelBooking(bookings[3]);
 
     expect(cancelReservation).to.deep.equal(bookedRoom);
   });
 
-  it('should calculate total spent', function() {
+  it('should calculate total spent', () => {
     expect(user.calculateTotalSpent(bookings)).to.equal(1756.36);
   });
 });
