@@ -232,13 +232,32 @@ label {
 }
 
 .filter-buttons {
-  background-image: url("../../assets/junior-suite.jpg");
   background-position: center center; /* Center the image */
   background-repeat: no-repeat; /* Do not repeat the image */
   background-size: cover;
+  color: #96281B;
+  font-size: 40px;
+  font-weight: bolder;
+  text-shadow: 1px 1px #FFFAFA;
   border-radius: 5px;
   padding: 100px;
   margin: 0 0 20px 0;
+}
+
+#suite {
+  background-image: url("../../assets/junior-suite.jpg");
+}
+
+#sing-room {
+
+}
+
+#res-suite {
+
+}
+
+#jun-suite {
+
 }
 
 #filter-section {
@@ -258,6 +277,3 @@ main {
   margin: 0 2.5%;
 }
 
-#filter-text {
-
-}
