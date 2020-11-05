@@ -29,6 +29,7 @@ class User {
   bookARoom(roomNumber, user, date) {
     const roomToBook = this.rooms.find(room => room.number === roomNumber);
     this.bookings.push({
+      //delete id and roomServiceCharges can't POST it
       "id": "5fwrgu4i7k55hl6t7",
       "userID": user.id,
       "date": date,
