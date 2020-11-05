@@ -28,6 +28,10 @@ class Manager extends User {
     }, 0)
   }
 
+  getPercentOccupied(date) {
+    let todaysBookedRooms = this.findBookedRooms(date);
+    return todaysBookedRooms.length / this.rooms.length;
+  }
 }
 
 export default Manager;
