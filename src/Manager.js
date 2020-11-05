@@ -19,6 +19,15 @@ class Manager extends User {
   findGuestByName(name) {
     return this.users.find(user => user.name === name);
   }
+
+  getTodaysRevenue(date) {
+    let todaysBookedRooms = this.findBookedRooms(date);
+    return this.rooms.reduce((totalRevenue, room) => {
+      todaysBookedRooms.includes(room.number) ? totalRevenue += room.costPerNight : null;
+      return totalRevenue
+    }, 0)
+  }
+
 }
 
 export default Manager;
