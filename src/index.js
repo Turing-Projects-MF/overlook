@@ -1,10 +1,35 @@
-// This is the JavaScript entry file - your code begins here
-// Do not delete or rename this file ********
-
-// An example of how you tell webpack to use a CSS (SCSS) file
 import './css/base.scss';
+import './css/base.scss';
+import User from './User';
+import apiRequest from './api-request';
 
-// An example of how you tell webpack to use an image (also need to link to it in the index.html)
-import './images/turing-logo.png'
+var modal = document.getElementById('id01');
 
-console.log('This is the JavaScript entry file - your code begins here.');
+let usersData;
+let roomsData;
+let bookingsData;
+let user;
+
+let recievedUsersData = apiRequest.getUsersData();
+let recievedRoomsData = apiRequest.getRoomsData();
+let recievedBookingsData = apiRequest.getBookingsData();
+
+Promise.all([recievedUsersData, recievedRoomsData, recievedBookingsData])
+  .then(value => {
+    usersData = value[0];
+    roomsData = value[1];
+    bookingsData = value[2];
+    createUser();
+  })
+
+
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+
+
+function createUser() {
+  user = new User(usersData, bookingsData, roomsData)
+}
