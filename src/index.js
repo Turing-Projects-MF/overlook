@@ -14,6 +14,10 @@ const loginButton= document.querySelector('.login-button');
 const managerDashboard = document.querySelector('.body__manager ');
 const main = document.querySelector('main');
 const guestBookingview = document.querySelectorAll('.body__guest__user__view')[1];
+const searchGuestInput = document.querySelector('#search-guest');
+const managerGuestBookings =  document.querySelector('.body__manager__user__section');
+const guestBookings =  document.querySelector('.body__guest__user__section');
+
 
 let usersData;
 let roomsData;
@@ -29,6 +33,7 @@ let recievedBookingsData = apiRequest.getBookingsData();
 
 fadeIn.addEventListener('animationend', displayLogin);
 loginButton.addEventListener('click', displayDashboard);
+searchGuestInput.addEventListener('keyup', displayManagerSearchResults);
 
 Promise.all([recievedUsersData, recievedRoomsData, recievedBookingsData])
   .then(value => {
@@ -66,6 +71,9 @@ function displayDashboard(e) {
     main.classList.remove('hidden');
     guestBookingview.classList.remove('hidden');
     createGuest();
+    displaySearchUserBookings(guest.currentUser.name, 'guest', guestBookings);
+
+
   }
 }
 
@@ -104,3 +112,52 @@ function displayPercentOccupied(date) {
   let totalPercent = manager.getPercentOccupied(date) * 100;
   document.querySelector('.body__manager__total__percent').innerText = `${totalPercent}%`;
 }
+
+function displayManagerSearchResults(e) {
+  if (e.key === 'Enter') {
+    displaySearchUserDetails();
+    displaySearchUserBookings(searchGuestInput.value, 'manager', managerGuestBookings);
+  }
+}
+
+function displaySearchUserDetails() {
+  const guest = manager.searchForGuest(searchGuestInput.value);
+  const guestDetails = `
+  <article class="body__manager__user__wrapper__article" id="manager-guest-name">${guest.guest}</article>
+  <article class="body__manager__user__wrapper__article" id="manager-guest-spent">$${guest.spent}</article>
+  `;
+  document.querySelector('.body__manager__user__wrapper').innerHTML = guestDetails;
+}
+
+function displaySearchUserBookings(name, htmlTag, selector) {
+  const guestDetails = formatUserBookings(name);
+  const displayGuestBookings = guestDetails.reduce((displayHTML, guest) => {
+    displayHTML += `
+      <article class="body__${htmlTag}__user__booking">
+            ${guest.bookedDate} ${guest.roomNumber} ${guest.roomType} ${guest.costPerNight}
+       </article>
+          `;
+    return displayHTML;
+  }, '')
+  selector.innerHTML = displayGuestBookings;
+}
+
+function formatUserBookings(name) {
+  const userDetails = user.searchForGuest(name);
+  return userDetails.bookings.reduce((formatDetails, booking) => {
+    let format = {};
+    format.bookedDate = booking.date;
+    format.roomNumber = booking.roomNumber;
+    user.rooms.forEach(room => {
+      if (room.number === booking.roomNumber) {
+        format.roomType = room.roomType;
+        format.costPerNight = room.costPerNight;
+      }
+    })
+    formatDetails.push(format);
+    return formatDetails;
+  }, [])
+}
+
+
+
