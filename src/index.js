@@ -72,7 +72,7 @@ function displayDashboard(e) {
     guestBookingview.classList.remove('hidden');
     createGuest();
     displaySearchUserBookings(guest.currentUser.name, 'guest', guestBookings);
-
+    displayGuestTotalSpent();
 
   }
 }
@@ -159,5 +159,7 @@ function formatUserBookings(name) {
   }, [])
 }
 
-
-
+function displayGuestTotalSpent() {
+  const totalSpent = guest.calculateTotalSpent(guest.bookings);
+  document.querySelector('.main__guest__wrapper__article').innerText = `$${totalSpent}`;
+}
