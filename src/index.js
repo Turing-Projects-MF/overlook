@@ -155,7 +155,7 @@ function formatUserBookings(name) {
       }
     })
     formatDetails.push(format);
-    return formatDetails;
+    return formatDetails.sort((a, b) => a.bookedDate > b.bookedDate ? -1 : 1);
   }, [])
 }
 
