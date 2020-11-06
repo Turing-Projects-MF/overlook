@@ -105,7 +105,7 @@ function displayAvailableRooms(date) {
 
 function displayTodaysRevenue(date) {
   const totalRevenue = manager.getTodaysRevenue(date);
-  document.querySelector('.body__manager__total__revenue').innerText = `${totalRevenue}`;
+  document.querySelector('.body__manager__total__revenue').innerText = `$${totalRevenue}`;
 }
 
 function displayPercentOccupied(date) {
