@@ -2,21 +2,26 @@
 <html lang="en-US">
   <head>
     <title>Overlook</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body>
-    <h1 class="body__welcome">Welcome to Overlook</h1>
+    <div class="fade-in">
+      <h1 class="body__welcome">Welcome to Overlook</h1>
+   </div>
     <section class="body__login hidden">
       <!-- add hidden to section to hide body -->
-      <h2>Modal Login Form</h2>
+
       <!-- login form modal -->
       <button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Login</button>
       <div id="id01" class="modal">
-        <form class="modal-content animate" action="/action_page.php" method="post">
+        <form class="modal-content animate">
+        <!-- <form class="modal-content animate" action="/action_page.php" method="post"> -->
           <div class="container">
             <label for="uname"><b>Username</b></label>
-            <input type="text" placeholder="Enter Username" name="uname" required>
+            <input id="login-username" type="text" placeholder="Enter Username" name="uname" required>
             <label for="psw"><b>Password</b></label>
-            <input type="password" placeholder="Enter Password" name="psw" required>
+            <input id="login-password" type="password" placeholder="Enter Password" name="psw" required>
             <button class="login-button" type="submit">Login</button>
           </div>
         </form>
@@ -28,15 +33,15 @@
       <section class="body__manager__dash">
         <article class="body__manager__dash__article" id="rooms-available">
           <p>Show Rooms Available</p>
-          <div>Data Here</div>
+          <aside class="body__manager__available__rooms"></aside>
         </article>
         <article class="body__manager__dash__article" id="today-revenue">
           <p>Show Today's Revenue</p>
-          <div>Data Here</div>
+          <aside class="body__manager__total__revenue"></aside>
         </article>
         <article class="body__manager__dash__article" id="room-occupied">
           <p>Show % Occupied</p>
-          <div>Data Here</div>
+          <aside class="body__manager__total__percent"></aside>
         </article>
       </section>
 
@@ -47,64 +52,58 @@
       <!-- show guest details -->
       <section class="body__manager__user__view">
 
-        <div class="body__manager__user__wrapper">
-          <article class="body__manager__user__wrapper__article" id="manager-guest-name">
-            GUEST NAME
-          </article>
-          <article class="body__manager__user__wrapper__article" id="manager-guest-spent">
-            $$$$$$$$
-          </article>
-        </div>
+        <div class="body__manager__user__wrapper"></div>
 
         <section class="body__manager__user__section">
+          <!-- <article class="body__manager__user__booking">
+            BOOKING DETAILS
+          </article>
           <article class="body__manager__user__booking">
             BOOKING DETAILS
           </article>
           <article class="body__manager__user__booking">
             BOOKING DETAILS
-          </article><article class="body_manager__user__booking">
-            BOOKING DETAILS
-          </article>
+          </article> -->
         </section>
 
       </section>
     </section>
     <div class="wrapper">
-    <main>
-        <div class="main__guest__wrapper">
-          <article class="main__guest__wrapper__article" id="guest-name">
-            TOTAL SPENT
-          </article>
-        </div>
-        <section class="body__guest__user__view">
-          <section class="body__guest__user__section" id="guest-bookings">
-            <button class="body__guest__user__booking">
-              BOOKING DETAILS
-            </button>
-            <button class="body__guest__user__booking">
-              BOOKING DETAILS
-            </button>
-            <button class="body__guest__user__booking">
-              BOOKING DETAILS
-            </button>
+      <main class="hidden">
+          <div class="main__guest__wrapper">
+            <article class="main__guest__wrapper__article">
+              TOTAL SPENT
+            </article>
+          </div>
+          <section class="body__guest__user__view">
+            <section class="body__guest__user__section" id="guest-bookings">
+              <!-- <button class="body__guest__user__booking">
+                BOOKING DETAILS
+              </button>
+              <button class="body__guest__user__booking">
+                BOOKING DETAILS
+              </button>
+              <button class="body__guest__user__booking">
+                BOOKING DETAILS
+              </button> -->
+            </section>
           </section>
-        </section>
-    </main>
+      </main>
 
-      <section class="body__guest__user__view" id="bookings-view">
+      <section class="body__guest__user__view hidden" id="bookings-view">
 
         <section class="body__guest__user__section" id="filter-section">
           <div class="main__guest__filter__button">
-            <button class="filter-buttons" id="suite">Suite</button>
+            <button class="filter-buttons" id="suite" title="Filter By Suites">Suites</button>
           </div>
           <div class="main__guest__filter__button">
-            <button class="filter-buttons" id="sing-room">Single Room</button>
+            <button class="filter-buttons" id="sing-room" title="Filter By Single Rooms">Single Rooms</button>
           </div>
           <div class="main__guest__filter__button">
-            <button class="filter-buttons" id="res-suite">Residential<br>Suite</button>
+            <button class="filter-buttons" id="res-suite" title="Filter By Residential Suites">Residential<br>Suites</button>
           </div>
           <div class="main__guest__filter__button">
-            <button class="filter-buttons" id="jun-suite">Junior Suite</button>
+            <button class="filter-buttons" id="jun-suite" title="Filter By Junior Suites">Junior Suites</button>
           </div>
         </section>
      </section>

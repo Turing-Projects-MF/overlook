@@ -16,6 +16,7 @@ body {
   background-attachment: fixed;
   h1 {
     color: $primary-text-color;
+
   }
 }
 
@@ -133,12 +134,12 @@ span.psw {
 
 
 /* Change styles for span and cancel button on extra small screens */
-@media screen and (max-width: 300px) {
-  span.psw {
-     display: block;
-     float: none;
-  }
-}
+// @media screen and (max-width: 300px) {
+//   span.psw {
+//      display: block;
+//      float: none;
+//   }
+// }
 
 //Dashboards
 .body__manager__dash {
@@ -151,7 +152,7 @@ span.psw {
   flex-wrap: wrap;
   article {
     flex-grow: 1;
-    height: 450px;
+    height: 225px;
     width: 300px;
     border: solid;
   }
@@ -186,7 +187,7 @@ span.psw {
   }
 }
 
-#manager-guest-name, #guest-name {
+#manager-guest-name, .main__guest__wrapper__article {
   height: 50px;
   margin: 10px 0;
 }
@@ -201,10 +202,10 @@ span.psw {
   width: 50%;
   margin: 10px 5% 0 2.5%;
   height: auto;
-  .body__manager__user__booking {
+  .body__manager__user__booking, .body__guest__user__booking {
     background-color: #c6c29b;
     margin: 20px 2.5%;
-    height: 100px;
+    min-height: 100px;
     box-shadow: 5px 10px #888888;
   }
 }
@@ -213,10 +214,22 @@ span.psw {
   width: 100%;
 }
 
+.main__guest__wrapper, .body__guest__user__booking {
+  color: #3455DB;
+  font-family: 'Roboto', sans-serif;
+  font-size: 24px;
+}
+
+.body__guest__user__booking {
+  height: 100%;
+}
+
 #guest-bookings {
   display: flex;
   flex-direction: column;
   align-items: center;
+  height: 1015px;
+  overflow: auto;
 }
 
 .body__guest__user__booking {
@@ -232,13 +245,33 @@ label {
 }
 
 .filter-buttons {
-  background-image: url("../../assets/junior-suite.jpg");
   background-position: center center; /* Center the image */
   background-repeat: no-repeat; /* Do not repeat the image */
   background-size: cover;
+  color: #96281B;
+  font-family: 'Roboto', sans-serif;
+  font-size: 40px;
+  font-weight: bolder;
+  text-shadow: 1px 1px #FFFAFA;
   border-radius: 5px;
   padding: 100px;
   margin: 0 0 20px 0;
+}
+
+#suite {
+  background-image: url("../../assets/suite.jpg");
+}
+
+#sing-room {
+  background-image: url("../../assets/single-room.jpg");
+}
+
+#res-suite {
+  background-image: url("../../assets/res-suite.jpg");
+}
+
+#jun-suite {
+  background-image: url("../../assets/junior-suite.jpg");
 }
 
 #filter-section {
@@ -258,6 +291,53 @@ main {
   margin: 0 2.5%;
 }
 
-#filter-text {
+.fade-in {
+  animation: fadeIn ease 5s;
+  -webkit-animation: fadeIn ease 5s;
+  -moz-animation: fadeIn ease 5s;
+  -o-animation: fadeIn ease 5s;
+  -ms-animation: fadeIn ease 5s;
+}
+@keyframes fadeIn {
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
+}
 
+@-moz-keyframes fadeIn {
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
+}
+
+@-webkit-keyframes fadeIn {
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
+}
+
+@media (max-width: 950px) {
+  .body__manager__user__view {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 5%;
+    width: 100%;
+  }
+  .body__manager__user__wrapper {
+    margin-right: 55px;
+  }
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+  }
 }

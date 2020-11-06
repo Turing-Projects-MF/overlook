@@ -120,23 +120,4 @@ describe('Manager', () => {
   it('should have a list of all rooms', () => {
     expect(manager.rooms).to.deep.equal(rooms);
   });
-
-  it('should find a guest by name', () => {
-    expect(manager.findGuestByName("Leatha Ullrich")).to.deep.equal(users[0]);
-  });
-
-  it('should find a guest\s bookings', () => {
-    const findGuest = manager.findGuestByName("Leatha Ullrich");
-    expect(manager.findGuestsBooking(findGuest)).to.deep.equal([bookings[0]]);
-  });
-
-  it('should be able to a guest\s bookings and total spent by their name', () => {
-    const searchGuest = manager.searchForGuest("Leatha Ullrich");
-
-    expect(searchGuest).to.deep.equal({
-      guest: users[0].name,
-      bookings: [bookings[0]],
-      spent: 358.4
-    })
-  })
 });

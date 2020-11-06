@@ -5,19 +5,32 @@ class Manager extends User {
     super(users, bookings, rooms);
   }
 
-  searchForGuest(name) {
-    let guest = this.findGuestByName(name);
-    let currentBookings = this.findGuestsBooking(guest);
-    let totalSpent = this.calculateTotalSpent(currentBookings);
-    return {
-      guest: guest.name,
-      bookings: currentBookings,
-      spent: totalSpent
-    }
+  // searchForGuest(name) {
+  //   let guest = this.findGuestByName(name);
+  //   let currentBookings = this.findGuestsBooking(guest);
+  //   let totalSpent = this.calculateTotalSpent(currentBookings);
+  //   return {
+  //     guest: guest.name,
+  //     bookings: currentBookings,
+  //     spent: totalSpent
+  //   }
+  // }
+
+  // findGuestByName(name) {
+  //   return this.users.find(user => user.name === name);
+  // }
+
+  getTodaysRevenue(date) {
+    let todaysBookedRooms = this.findBookedRooms(date);
+    return this.rooms.reduce((totalRevenue, room) => {
+      todaysBookedRooms.includes(room.number) ? totalRevenue += room.costPerNight : null;
+      return totalRevenue
+    }, 0)
   }
 
-  findGuestByName(name) {
-    return this.users.find(user => user.name === name);
+  getPercentOccupied(date) {
+    let todaysBookedRooms = this.findBookedRooms(date);
+    return todaysBookedRooms.length / this.rooms.length;
   }
 }
 
