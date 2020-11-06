@@ -202,7 +202,7 @@ span.psw {
   width: 50%;
   margin: 10px 5% 0 2.5%;
   height: auto;
-  .body__manager__user__booking {
+  .body__manager__user__booking, .body__guest__user__booking {
     background-color: #c6c29b;
     margin: 20px 2.5%;
     height: 100px;
@@ -220,10 +220,16 @@ span.psw {
   font-size: 24px;
 }
 
+.body__guest__user__booking {
+  height: 100%;
+}
+
 #guest-bookings {
   display: flex;
   flex-direction: column;
   align-items: center;
+  height: 1020px;
+  overflow: auto;
 }
 
 .body__guest__user__booking {
@@ -329,5 +335,9 @@ main {
   }
   .body__manager__user__wrapper {
     margin-right: 55px;
+  }
+  .wrapper {
+    display: flex;
+    flex-direction: column;
   }
 }
