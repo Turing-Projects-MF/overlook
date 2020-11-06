@@ -170,6 +170,25 @@ describe('User', () => {
     expect(user.bookings).to.deep.equal(bookedRooms);
   });
 
+  it('should find a guest by name', () => {
+    expect(user.findGuestByName("Leatha Ullrich")).to.deep.equal(users[0]);
+  });
+
+  it('should find a guest\s bookings', () => {
+    const findGuest = user.findGuestByName("Leatha Ullrich");
+    expect(user.findGuestsBooking(findGuest)).to.deep.equal([bookings[0]]);
+  });
+
+  it('should be able to a guest\s bookings and total spent by their name', () => {
+    const searchGuest = user.searchForGuest("Leatha Ullrich");
+
+    expect(searchGuest).to.deep.equal({
+      guest: users[0].name,
+      bookings: [bookings[0]],
+      spent: 358.4
+    })
+  })
+
   it('should be able to return removed booking', () => {
     const bookedRoom = bookings[3];
     const cancelReservation = user.cancelBooking(bookings[3]);
