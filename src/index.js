@@ -183,6 +183,7 @@ function displaySearchUserBookings(name, htmlTag, selector) {
     displayHTML += `
       <article class="body__${htmlTag}__user__booking">
       <div>${guest.bookedDate}</div><div>Room: ${guest.roomNumber}</div><div>Type: ${guest.roomType} Per Night: $${guest.costPerNight}</div>
+        <img class="delete" src="https://i.imgur.com/VkyustM.png">
        </article>
           `;
     return displayHTML;
