@@ -23,6 +23,7 @@ const dateValue = document.querySelector('#date-search');
 const calendar = document.querySelector('.calendar');
 const filterButtons = document.getElementsByClassName('filter-buttons');
 const deleteButtons = document.getElementsByClassName('delete');
+const bookButtons = document.getElementsByClassName('book-room');
 
 let usersData;
 let roomsData;
@@ -196,7 +197,7 @@ function displaySearchUserBookings(name, htmlTag, selector) {
     displayHTML += `
       <article class="body__${htmlTag}__user__booking">
       <div>${guest.bookedDate}</div><div>Room: ${guest.roomNumber}</div><div>Type: ${guest.roomType} Per Night: $${guest.costPerNight}</div>
-        <div class="delete ${guest.bookingID}"></div>
+        <div class="delete ${guest.bookingID}" title="Delete Booking"></div>
        </article>
           `;
     return displayHTML;
@@ -237,6 +238,8 @@ function chooseDate(e) {
   const formatDateValue = dateValue.value.split('-').join('/');
   const availableRooms = user.searchAvailability(formatDateValue);
   clearBookingsDetails()
+  console.log(formatDateValue);
+  console.log(availableRooms);
   displayGuestSearchResults(availableRooms, formatDateValue);
 }
 //invoke in manage dashboards
@@ -252,7 +255,8 @@ function displayGuestSearchResults(rooms, date) {
  const displaySearchResults = rooms.reduce((displayHTML, room) => {
     displayHTML += `
     <article class="body__guest__user__booking">
-    <div>Type: ${room.roomType} </div><div>Per Night: $${room.costPerNight} </div><div>Bed(s): ${room.numBeds} ${room.bedSize}</div>
+      <div>Type: ${room.roomType} </div><div>Per Night: $${room.costPerNight} </div><div>Bed(s): ${room.numBeds} ${room.bedSize}</div>
+      <div class="book-room" id="${room.number}" title="Book The Room"></div>
     </article>
         `;
     return displayHTML;
@@ -260,6 +264,7 @@ function displayGuestSearchResults(rooms, date) {
   guestBookingsTitle.insertAdjacentHTML('afterend', displaySearchResults)
   document.querySelector('.main__guest__wrapper__article').innerText = `Search Results:`
   document.querySelector('.body__guest__user__booking').innerText = `Available rooms on ${date}`;
+  addBookButtonEventListeners();
 }
 
 function filterRooms(e) {
@@ -277,7 +282,17 @@ function clearBookingsDetails() {
   })
 }
 
-
+function addBooking(e) {
+  const roomNumber = Number(e.target.id);
+  const formatDate = dateValue.value.split('-').join('/');
+  const bookingDetails = {
+    "userID": guest.currentUser.id,
+    "date": formatDate,
+    roomNumber
+  }
+  apiRequest.postBookingData(bookingDetails);
+  guest.bookARoom(roomNumber, guest.currentUser, dateValue.value);
+}
 
 function deleteBooking(e) {
   const identifyBooking = e.target.classList;
@@ -285,11 +300,13 @@ function deleteBooking(e) {
   const bookingToDelete = user.findBookingToDelete(bookingNumber);
   apiRequest.deleteBookingData(bookingToDelete);
   updateBookingsData()
-  console.log(bookingsData);
 }
 
-
-
+function addBookButtonEventListeners() {
+  for (let i = 0; i < bookButtons.length; i++) {
+    bookButtons[i].addEventListener('click', addBooking)
+  }
+}
 
 function addDeleteButtonEventListeners() {
   for (let i = 0; i < deleteButtons.length; i++) {
