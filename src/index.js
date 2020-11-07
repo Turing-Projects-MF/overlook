@@ -22,6 +22,7 @@ const dateSubmitButton = document.querySelector('.date-submit');
 const dateValue = document.querySelector('#date-search');
 const calendar = document.querySelector('.calendar');
 const filterButtons = document.getElementsByClassName('filter-buttons');
+const deleteButtons = document.getElementsByClassName('delete');
 
 let usersData;
 let roomsData;
@@ -30,9 +31,9 @@ let user;
 let guest;
 let manager;
 
-let recievedUsersData = apiRequest.getUsersData();
-let recievedRoomsData = apiRequest.getRoomsData();
-let recievedBookingsData = apiRequest.getBookingsData();
+const recievedUsersData = apiRequest.getUsersData();
+const recievedRoomsData = apiRequest.getRoomsData();
+const recievedBookingsData = apiRequest.getBookingsData();
 
 
 fadeIn.addEventListener('animationend', displayLogin);
@@ -57,6 +58,17 @@ window.onclick = function(event) {
     modal.style.display = "none";
   }
 }
+
+
+//not working
+function updateBookingsData() {
+  const updatedData = apiRequest.getBookingsData();
+  Promise.all([updatedData])
+    .then(value => {
+      bookingsData = value[0];
+    })
+}
+
 
 function createUser() {
   user = new User(usersData, bookingsData, roomsData);
@@ -117,9 +129,10 @@ function createGuest() {
 }
 
 function createGuestBookings(guest) {
-  return bookingsData.filter(booking => {
+  const guestBookings = bookingsData.filter(booking => {
     return booking.userID === guest.currentUser.id;
   })
+  return guestBookings
 }
 
 function createManager() {
@@ -178,12 +191,12 @@ function displaySearchUserDetails() {
 
 function displaySearchUserBookings(name, htmlTag, selector) {
   const guestDetails = formatUserBookings(name);
+  console.log(guestDetails);
   const displayGuestBookings = guestDetails.reduce((displayHTML, guest) => {
-    //add Bookings to top of display
     displayHTML += `
       <article class="body__${htmlTag}__user__booking">
       <div>${guest.bookedDate}</div><div>Room: ${guest.roomNumber}</div><div>Type: ${guest.roomType} Per Night: $${guest.costPerNight}</div>
-        <img class="delete" src="https://i.imgur.com/VkyustM.png">
+        <div class="delete ${guest.bookingID}"></div>
        </article>
           `;
     return displayHTML;
@@ -193,12 +206,14 @@ function displaySearchUserBookings(name, htmlTag, selector) {
   } else {
     selector.innerHTML = displayGuestBookings;
   }
+  addDeleteButtonEventListeners();
 }
 
 function formatUserBookings(name) {
   const userDetails = user.searchForGuest(name);
   return userDetails.bookings.reduce((formatDetails, booking) => {
     let format = {};
+    format.bookingID = booking.id;
     format.bookedDate = booking.date;
     format.roomNumber = booking.roomNumber;
     user.rooms.forEach(room => {
@@ -260,4 +275,24 @@ function clearBookingsDetails() {
     query.innerHTML = '';
     query.classList.remove('body__guest__user__booking');
   })
+}
+
+
+
+function deleteBooking(e) {
+  const identifyBooking = e.target.classList;
+  const bookingNumber = Number(identifyBooking[1]);
+  const bookingToDelete = user.findBookingToDelete(bookingNumber);
+  apiRequest.deleteBookingData(bookingToDelete);
+  updateBookingsData()
+  console.log(bookingsData);
+}
+
+
+
+
+function addDeleteButtonEventListeners() {
+  for (let i = 0; i < deleteButtons.length; i++) {
+    deleteButtons[i].addEventListener('click', deleteBooking)
+  }
 }
