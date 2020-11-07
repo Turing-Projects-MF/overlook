@@ -18,6 +18,21 @@ const apiRequest = {
       .then(response => response.json())
       .then(data => data.bookings)
       .catch(error => console.log(error));
+  },
+
+  postBookingData() {
+
+  },
+
+  deleteBookingData() {
+    fetch('https://fe-apps.herokuapp.com/api/v1/overlook/1904/bookings/bookings', {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({"id": 1604776869402})
+    })
+      .catch(error => console.log(error))
   }
 };
 
