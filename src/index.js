@@ -58,22 +58,41 @@ function displayLogin() {
   bodyLogin.classList.remove('hidden');
 }
 
+//add function to validate data before running display dashboard
+//use if valid run displayDash, else display alert
+
+function checkUsername() {
+  const username = loginUsername.value;
+  const validate = username.split(/([0-9]+)/);
+  if (username === 'manager' || validate.includes('customer')) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function checkPassword() {
+  const password = loginPassword.value;
+  if (password === 'overlook2020') {
+    return true
+  } else {
+    return false
+  }
+}
+
 function displayDashboard(e) {
   e.preventDefault();
+  if (!checkPassword() || !checkUsername()) {
+    alert ('You username and password did not match our system. Please re-enter');
+    return
+  }
   bodyLogin.classList.add('hidden');
-  if (loginUsername.value.includes('manager')) {
-    managerDashboard.classList.remove('hidden');
+  if (loginUsername.value === 'manager') {
     createManager();
-    displayAvailableRooms("2020/04/22");
-    displayTodaysRevenue("2020/04/22");
-    displayPercentOccupied("2020/04/22");
+    displayManagerDashboard("2020/04/22");
   } else if (loginUsername.value.includes('customer')) {
-    main.classList.remove('hidden');
-    guestBookingview.classList.remove('hidden');
     createGuest();
-    displaySearchUserBookings(guest.currentUser.name, 'guest', guestBookings);
-    displayGuestTotalSpent();
-
+    displayGuestDashboard();
   }
 }
 
@@ -96,6 +115,20 @@ function createManager() {
   if (loginUsername.value === `manager` && loginPassword.value === 'overlook2020')  {
     manager = new Manager(usersData, bookingsData, roomsData);
   }
+}
+
+function displayManagerDashboard(date) {
+  managerDashboard.classList.remove('hidden');
+  displayAvailableRooms(date);
+  displayTodaysRevenue(date);
+  displayPercentOccupied(date);
+}
+
+function displayGuestDashboard() {
+  main.classList.remove('hidden');
+  guestBookingview.classList.remove('hidden');
+  displaySearchUserBookings(guest.currentUser.name, 'guest', guestBookings);
+  displayGuestTotalSpent();
 }
 
 function displayAvailableRooms(date) {
@@ -132,6 +165,7 @@ function displaySearchUserDetails() {
 function displaySearchUserBookings(name, htmlTag, selector) {
   const guestDetails = formatUserBookings(name);
   const displayGuestBookings = guestDetails.reduce((displayHTML, guest) => {
+    //add Bookings to top of display
     displayHTML += `
       <article class="body__${htmlTag}__user__booking">
             ${guest.bookedDate} ${guest.roomNumber} ${guest.roomType} ${guest.costPerNight}
