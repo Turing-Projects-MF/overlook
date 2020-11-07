@@ -21,6 +21,7 @@ const guestBookingsTitle = document.querySelector('#bookings-title');
 const dateSubmitButton = document.querySelector('.date-submit');
 const dateValue = document.querySelector('#date-search');
 const calendar = document.querySelector('.calendar');
+const filterButtons = document.getElementsByClassName('filter-buttons');
 
 let usersData;
 let roomsData;
@@ -38,6 +39,9 @@ fadeIn.addEventListener('animationend', displayLogin);
 loginButton.addEventListener('click', displayDashboard);
 searchGuestInput.addEventListener('keyup', displayManagerSearchResults);
 dateSubmitButton.addEventListener('click', chooseDate)
+for (let i = 0; i < filterButtons.length; i++) {
+  filterButtons[i].addEventListener('click', filterRooms)
+}
 
 Promise.all([recievedUsersData, recievedRoomsData, recievedBookingsData])
   .then(value => {
@@ -60,6 +64,7 @@ function createUser() {
 
 function displayLogin() {
   bodyLogin.classList.remove('hidden');
+  getTodaysDate()
 }
 
 function checkUsername() {
@@ -177,7 +182,7 @@ function displaySearchUserBookings(name, htmlTag, selector) {
     //add Bookings to top of display
     displayHTML += `
       <article class="body__${htmlTag}__user__booking">
-            ${guest.bookedDate}<br>Room: ${guest.roomNumber}<br>Type: ${guest.roomType} Per Night: $${guest.costPerNight}
+      <div>${guest.bookedDate}</div><div>Room: ${guest.roomNumber}</div><div>Type: ${guest.roomType} Per Night: $${guest.costPerNight}</div>
        </article>
           `;
     return displayHTML;
@@ -208,19 +213,50 @@ function formatUserBookings(name) {
 
 function displayGuestTotalSpent() {
   const totalSpent = guest.calculateTotalSpent(guest.bookings);
-  document.querySelector('.main__guest__wrapper__article').innerText = `$${totalSpent}`;
+  document.querySelector('.main__guest__wrapper__article').innerHTML = `You have spent $${totalSpent}<br>Thank you for your patronage!`;
 }
 
 function chooseDate(e) {
   e.preventDefault();
-  const formatDateValue = dateValue.value.split('-').join('/')
-  console.log(formatDateValue);
+  const formatDateValue = dateValue.value.split('-').join('/');
+  const availableRooms = user.searchAvailability(formatDateValue);
+  clearBookingsDetails()
+  displayGuestSearchResults(availableRooms, formatDateValue);
 }
-
+//invoke in manage dashboards
 function getTodaysDate() {
   let today = new Date();
   const dd = String(today.getDate()).padStart(2, '0');
-  const mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+  const mm = String(today.getMonth() + 1).padStart(2, '0');
   const yyyy = today.getFullYear();
-  today = mm + '/' + dd + '/' + yyyy;
+  return today = yyyy + '/' + mm + '/' + dd;
+}
+
+function displayGuestSearchResults(rooms, date) {
+ const displaySearchResults = rooms.reduce((displayHTML, room) => {
+    displayHTML += `
+    <article class="body__guest__user__booking">
+    <div>Type: ${room.roomType} </div><div>Per Night: $${room.costPerNight} </div><div>Bed(s): ${room.numBeds} ${room.bedSize}</div>
+    </article>
+        `;
+    return displayHTML;
+  }, '')
+  guestBookingsTitle.insertAdjacentHTML('afterend', displaySearchResults)
+  document.querySelector('.main__guest__wrapper__article').innerText = `Search Results:`
+  document.querySelector('.body__guest__user__booking').innerText = `Available rooms on ${date}`;
+}
+
+function filterRooms(e) {
+  const formatDate = dateValue.value.split('-').join('/');
+  const roomType = e.target.value;
+  const filteredRooms = guest.filterRoomByType(roomType, formatDate)
+  clearBookingsDetails();
+  displayGuestSearchResults(filteredRooms, formatDate)
+}
+
+function clearBookingsDetails() {
+  document.querySelectorAll('.body__guest__user__booking').forEach(query => {
+    query.innerHTML = '';
+    query.classList.remove('body__guest__user__booking');
+  })
 }
