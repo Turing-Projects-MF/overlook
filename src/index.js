@@ -58,18 +58,21 @@ function displayLogin() {
   bodyLogin.classList.remove('hidden');
 }
 
-//add function to validate data before running display dashboard
-//use if valid run displayDash, else display alert
-
 function checkUsername() {
   const username = loginUsername.value;
-  const validate = username.split(/([0-9]+)/);
-  if (username === 'manager' || validate.includes('customer')) {
+  let validName;
+  usersData.forEach(user => {
+    if (username === `customer${user.id}`) {
+      validName = true;
+    }
+  })
+  if (username === 'manager' || validName) {
     return true;
   } else {
-    return false;
+    return false
   }
 }
+
 
 function checkPassword() {
   const password = loginPassword.value;
@@ -86,7 +89,6 @@ function displayDashboard(e) {
     alert ('You username and password did not match our system. Please re-enter');
     return
   }
-  bodyLogin.classList.add('hidden');
   if (loginUsername.value === 'manager') {
     createManager();
     displayManagerDashboard("2020/04/22");
@@ -98,7 +100,7 @@ function displayDashboard(e) {
 
 function createGuest() {
   usersData.forEach(user => {
-    if (loginUsername.value === `customer${user.id}` && loginPassword.value === 'overlook2020') {
+    if (loginUsername.value === `customer${user.id}`) {
       guest = new Guest(usersData, bookingsData, roomsData, user);
       guest.bookings = createGuestBookings(guest);
     }
@@ -119,6 +121,7 @@ function createManager() {
 
 function displayManagerDashboard(date) {
   managerDashboard.classList.remove('hidden');
+  bodyLogin.classList.add('hidden');
   displayAvailableRooms(date);
   displayTodaysRevenue(date);
   displayPercentOccupied(date);
@@ -127,6 +130,7 @@ function displayManagerDashboard(date) {
 function displayGuestDashboard() {
   main.classList.remove('hidden');
   guestBookingview.classList.remove('hidden');
+  bodyLogin.classList.add('hidden');
   displaySearchUserBookings(guest.currentUser.name, 'guest', guestBookings);
   displayGuestTotalSpent();
 }
@@ -137,7 +141,7 @@ function displayAvailableRooms(date) {
 }
 
 function displayTodaysRevenue(date) {
-  const totalRevenue = manager.getTodaysRevenue(date);
+  const totalRevenue =  manager.getTodaysRevenue(date);
   document.querySelector('.body__manager__total__revenue').innerText = `$${totalRevenue}`;
 }
 
