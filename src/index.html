@@ -6,9 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body>
-    <div class="fade-in">
-      <h1 class="body__welcome">Welcome to Overlook</h1>
-   </div>
+    <nav>
+      <div class="fade-in">
+        <h1 class="body__welcome">Welcome to Overlook</h1>
+      </div>
+      <form class="calendar hidden">
+        <label for="date-search">Search Availability:</label>
+        <input type="date" id="date-search" name="date-search">
+        <input class="date-submit" type="submit">
+      </form>
+   </nav>
     <section class="body__login hidden">
       <!-- add hidden to section to hide body -->
 
@@ -77,6 +84,9 @@
           </div>
           <section class="body__guest__user__view">
             <section class="body__guest__user__section" id="guest-bookings">
+
+              <article class="body__guest__user__booking" id="bookings-title">Your Bookings</article>
+
               <!-- <button class="body__guest__user__booking">
                 BOOKING DETAILS
               </button>
