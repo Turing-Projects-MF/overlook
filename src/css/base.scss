@@ -32,6 +32,7 @@ form {
 .hidden {
   display: none;
 }
+
 // LOGIN SCREEN
 /* Full-width input fields */
 input[type=text], input[type=password] {
@@ -281,11 +282,25 @@ label {
   width: 20px;
 }
 
+.book-room {
+  background-image: url("https://i.imgur.com/UNQ7KOg.png");
+  background-size: 20px;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  height: 20px;
+  width: 20px;
+}
+
+.book-room:hover {
+  background-image: url('https://i.imgur.com/jua0har.png');
+}
+
 .delete:hover {
   background-image: url('https://i.imgur.com/vDnQW0k.png');
 }
 
-.delete:active {
+.delete:active, .book-room:active {
   transform: translateY(2px)
 }
 
