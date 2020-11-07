@@ -17,7 +17,10 @@ const guestBookingview = document.querySelectorAll('.body__guest__user__view')[1
 const searchGuestInput = document.querySelector('#search-guest');
 const managerGuestBookings =  document.querySelector('.body__manager__user__section');
 const guestBookings =  document.querySelector('.body__guest__user__section');
-
+const guestBookingsTitle = document.querySelector('#bookings-title');
+const dateSubmitButton = document.querySelector('.date-submit');
+const dateValue = document.querySelector('#date-search');
+const calendar = document.querySelector('.calendar');
 
 let usersData;
 let roomsData;
@@ -34,6 +37,7 @@ let recievedBookingsData = apiRequest.getBookingsData();
 fadeIn.addEventListener('animationend', displayLogin);
 loginButton.addEventListener('click', displayDashboard);
 searchGuestInput.addEventListener('keyup', displayManagerSearchResults);
+dateSubmitButton.addEventListener('click', chooseDate)
 
 Promise.all([recievedUsersData, recievedRoomsData, recievedBookingsData])
   .then(value => {
@@ -131,7 +135,8 @@ function displayGuestDashboard() {
   main.classList.remove('hidden');
   guestBookingview.classList.remove('hidden');
   bodyLogin.classList.add('hidden');
-  displaySearchUserBookings(guest.currentUser.name, 'guest', guestBookings);
+  calendar.classList.remove('hidden');
+  displaySearchUserBookings(guest.currentUser.name, 'guest', guestBookingsTitle);
   displayGuestTotalSpent();
 }
 
@@ -172,12 +177,16 @@ function displaySearchUserBookings(name, htmlTag, selector) {
     //add Bookings to top of display
     displayHTML += `
       <article class="body__${htmlTag}__user__booking">
-            ${guest.bookedDate} ${guest.roomNumber} ${guest.roomType} ${guest.costPerNight}
+            ${guest.bookedDate}<br>Room: ${guest.roomNumber}<br>Type: ${guest.roomType} Per Night: $${guest.costPerNight}
        </article>
           `;
     return displayHTML;
   }, '')
-  selector.innerHTML = displayGuestBookings;
+  if (htmlTag === 'guest') {
+    selector.insertAdjacentHTML('afterend', displayGuestBookings)
+  } else {
+    selector.innerHTML = displayGuestBookings;
+  }
 }
 
 function formatUserBookings(name) {
@@ -200,4 +209,18 @@ function formatUserBookings(name) {
 function displayGuestTotalSpent() {
   const totalSpent = guest.calculateTotalSpent(guest.bookings);
   document.querySelector('.main__guest__wrapper__article').innerText = `$${totalSpent}`;
+}
+
+function chooseDate(e) {
+  e.preventDefault();
+  const formatDateValue = dateValue.value.split('-').join('/')
+  console.log(formatDateValue);
+}
+
+function getTodaysDate() {
+  let today = new Date();
+  const dd = String(today.getDate()).padStart(2, '0');
+  const mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+  const yyyy = today.getFullYear();
+  today = mm + '/' + dd + '/' + yyyy;
 }
