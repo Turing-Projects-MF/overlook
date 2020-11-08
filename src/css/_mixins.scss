@@ -1,0 +1,19 @@
+@mixin position-buttons {
+  background-size: 20px;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  height: 20px;
+  width: 20px;
+}
+
+@mixin position-images {
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+@mixin column-flex {
+  display: flex;
+  flex-direction: column;
+}
