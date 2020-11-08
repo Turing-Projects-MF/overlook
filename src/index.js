@@ -10,13 +10,12 @@ const bodyLogin = document.querySelector('.body__login');
 const fadeIn = document.querySelector('.fade-in');
 const loginUsername = document.querySelector('#login-username');
 const loginPassword = document.querySelector('#login-password');
-const loginButton= document.querySelector('.login-button');
+const loginButton = document.querySelector('.login-button');
 const managerDashboard = document.querySelector('.body__manager ');
 const main = document.querySelector('main');
 const guestBookingview = document.querySelectorAll('.body__guest__user__view')[1];
 const searchGuestInput = document.querySelector('#search-guest');
 const managerGuestBookings =  document.querySelector('.body__manager__user__section');
-const guestBookings =  document.querySelector('.body__guest__user__section');
 const guestBookingsTitle = document.querySelector('#bookings-title');
 const dateSubmitButton = document.querySelector('.date-submit');
 const dateValue = document.querySelector('#date-search');
@@ -24,6 +23,7 @@ const calendar = document.querySelector('.calendar');
 const filterButtons = document.getElementsByClassName('filter-buttons');
 const deleteButtons = document.getElementsByClassName('delete');
 const bookButtons = document.getElementsByClassName('book-room');
+const openModalButton = document.querySelector('.open-modal-button');
 
 let usersData;
 let roomsData;
@@ -40,7 +40,8 @@ const recievedBookingsData = apiRequest.getBookingsData();
 fadeIn.addEventListener('animationend', displayLogin);
 loginButton.addEventListener('click', displayDashboard);
 searchGuestInput.addEventListener('keyup', displayManagerSearchResults);
-dateSubmitButton.addEventListener('click', chooseDate)
+openModalButton.addEventListener('click', showLoginPrompts);
+dateSubmitButton.addEventListener('click', chooseDate);
 for (let i = 0; i < filterButtons.length; i++) {
   filterButtons[i].addEventListener('click', filterRooms)
 }
@@ -78,6 +79,10 @@ function createUser() {
 function displayLogin() {
   bodyLogin.classList.remove('hidden');
   getTodaysDate()
+}
+
+function showLoginPrompts() {
+  document.getElementById('id01').style.display = 'block';
 }
 
 function checkUsername() {
