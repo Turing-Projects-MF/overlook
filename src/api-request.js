@@ -31,7 +31,7 @@ const apiRequest = {
       .catch(error => console.log(error))
   },
 
-  deleteBookingData(booking) {
+  deleteBookingData(booking, callback) {
     fetch('https://fe-apps.herokuapp.com/api/v1/overlook/1904/bookings/bookings', {
       method: 'DELETE',
       headers: {
@@ -39,6 +39,7 @@ const apiRequest = {
       },
       body: JSON.stringify(booking)
     })
+      .then(callback())
       .catch(error => console.log(error))
   }
 };
