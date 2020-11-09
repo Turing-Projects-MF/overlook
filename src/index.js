@@ -272,16 +272,20 @@ function addBooking(e) {
   } else {
     formatDate =  managerSearchDate.value.split('-').join('/');
   }
-  const bookingDetails = {
-    "userID": guest.currentUser.id,
-    "date": formatDate,
-    roomNumber
+  if (!compareDates(formatDate)) {
+    alert ('You cannot book a room for a date that has already occured.')
+  } else {
+    const bookingDetails = {
+      "userID": guest.currentUser.id,
+      "date": formatDate,
+      roomNumber
+    }
+    let onSuccess = () => {
+      getUpdatedBookings()
+    }
+    apiRequest.postBookingData(bookingDetails, onSuccess);
+    alert ('This room has been booked!');
   }
-  let onSuccess = () => {
-    getUpdatedBookings()
-  }
-  apiRequest.postBookingData(bookingDetails, onSuccess);
-  alert ('This room has been booked!');
 }
 
 function getUpdatedBookings() {
@@ -294,7 +298,6 @@ function getUpdatedBookings() {
       displaySearchUserBookings(guest.currentUser.name, 'guest', guestBookingsTitle);
       displayGuestTotalSpent(guest);
     })
-    //.then(() => displaySearchUserBookings(guest.currentUser.name, 'guest', guestBookingsTitle))
 }
 
 function deleteBooking(e) {
