@@ -130,12 +130,6 @@ describe('User', () => {
     expect(user.searchAvailability("2020/01/10")).to.deep.equal([rooms[0], rooms[3]]);
   });
 
-  it('should should apologize if there are no rooms available', () => {
-    const user2 = new User(users, bookings, []);
-    const message = 'We are deeply sorry that we do not have any rooms available on 2020/11/03';
-    expect(user2.searchAvailability("2020/11/03")).to.equal(message);
-  });
-
   it('should be able to remove a booking', () => {
     user.cancelBooking(bookings[3]);
     let bookedRooms = [bookings[0], bookings[1], bookings[2]];
