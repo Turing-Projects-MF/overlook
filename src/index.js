@@ -35,9 +35,9 @@ let user;
 let guest;
 let manager;
 
-const recievedUsersData = apiRequest.getUsersData();
-const recievedRoomsData = apiRequest.getRoomsData();
-const recievedBookingsData = apiRequest.getBookingsData();
+let recievedUsersData = apiRequest.getUsersData();
+let recievedRoomsData = apiRequest.getRoomsData();
+let recievedBookingsData = apiRequest.getBookingsData();
 
 
 fadeIn.addEventListener('animationend', displayLogin);
@@ -302,15 +302,31 @@ function addBooking(e) {
   } else {
     formatDate =  managerSearchDate.value.split('-').join('/');
   }
-
   const bookingDetails = {
     "userID": guest.currentUser.id,
     "date": formatDate,
     roomNumber
   }
-  apiRequest.postBookingData(bookingDetails);
+  let onSuccess = () => {
+    getUpdatedBookings()
+  }
+  apiRequest.postBookingData(bookingDetails, onSuccess);
   alert ('This room has been booked!')
   //guest.bookARoom(roomNumber, guest.currentUser, dateValue.value);
+}
+
+function getUpdatedBookings() {
+  recievedBookingsData = apiRequest.getBookingsData();
+  recievedBookingsData
+    .then(value => {
+      bookingsData = value;
+      user.bookings = value;
+      guest.bookings = createGuestBookings(guest);
+      displaySearchUserBookings(guest.currentUser.name, 'guest', guestBookingsTitle);
+      displayGuestTotalSpent(guest);
+      //keeps display same rooms
+    })
+    //.then(() => displaySearchUserBookings(guest.currentUser.name, 'guest', guestBookingsTitle))
 }
 
 function deleteBooking(e) {
@@ -322,7 +338,7 @@ function deleteBooking(e) {
     alert ('Cannot cancel a past reservation!')
   } else {
     console.log(bookingToDelete);
-    apiRequest.deleteBookingData(bookingToDelete, updateBookingsData)
+    apiRequest.deleteBookingData(bookingToDelete)
     alert ('Your booking has been deleted!')
   }
 }
