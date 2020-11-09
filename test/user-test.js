@@ -29,32 +29,28 @@ describe('User', () => {
 
     bookings = [
       {
-        "id": "5fwrgu4i7k55hl6sz",
+        "id": 1,
         "userID": 1,
         "date": "2020/04/22",
         "roomNumber": 1,
-        "roomServiceCharges": []
       },
       {
-        "id": "5fwrgu4i7k55hl6t5",
+        "id": 2,
         "userID": 2,
         "date": "2020/01/10",
         "roomNumber": 2,
-        "roomServiceCharges": []
       },
       {
-        "id": "5fwrgu4i7k55hl6t6",
+        "id": 3,
         "userID": 3,
         "date": "2020/01/10",
         "roomNumber": 3,
-        "roomServiceCharges": []
       },
       {
-        "id": "5fwrgu4i7k55hl6t7",
+        "id": 4,
         "userID": 4,
         "date": "2020/02/16",
         "roomNumber": 4,
-        "roomServiceCharges": []
       }
     ];
 
@@ -134,35 +130,6 @@ describe('User', () => {
     expect(user.searchAvailability("2020/01/10")).to.deep.equal([rooms[0], rooms[3]]);
   });
 
-  it('should should apologize if there are no rooms available', () => {
-    const user2 = new User(users, bookings, []);
-    const message = 'We are deeply sorry that we do not have any rooms available on 2020/11/03';
-    expect(user2.searchAvailability("2020/11/03")).to.equal(message);
-  });
-
-  it('should be able to book a room', () => {
-    user.bookARoom(1, users[0], "2020/01/10");
-    let bookedRooms = [bookings[0], bookings[1], bookings[2], bookings[3], {
-      "id": "5fwrgu4i7k55hl6t7",
-      "userID": 1,
-      "date": "2020/01/10",
-      "roomNumber": 1,
-      "roomServiceCharges": []
-    }];
-
-    expect(user.bookings).to.deep.equal(bookedRooms)
-  });
-
-  it('should return booked room', () => {
-    expect(user.bookARoom(1, users[0], "2020/01/10")).to.deep.equal({
-      "id": "5fwrgu4i7k55hl6t7",
-      "userID": 1,
-      "date": "2020/01/10",
-      "roomNumber": 1,
-      "roomServiceCharges": []
-    })
-  });
-
   it('should be able to remove a booking', () => {
     user.cancelBooking(bookings[3]);
     let bookedRooms = [bookings[0], bookings[1], bookings[2]];
@@ -198,5 +165,17 @@ describe('User', () => {
 
   it('should calculate total spent', () => {
     expect(user.calculateTotalSpent(bookings)).to.equal(1756.36);
+  });
+
+  it('should find a guest\s bookings', () => {
+    expect(user.findGuestsBooking(users[0])).to.deep.equal([bookings[0]])
+  });
+
+  it('should find a guest by their name', () => {
+    expect(user.findGuestByName("Leatha Ullrich")).to.deep.equal(users[0])
+  });
+
+  it('should find a booking to delete', () => {
+    expect(user.findBookingToDelete(1)).to.deep.equal(bookings[0])
   });
 });
