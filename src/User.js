@@ -27,6 +27,7 @@ class User {
     return this.rooms.filter(room => !bookedRooms.includes(room.number));
   }
 
+  //don't need bookARoom
   bookARoom(roomNumber, user, date) {
     const roomToBook = this.rooms.find(room => room.number === roomNumber);
     this.bookings.push({
