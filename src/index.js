@@ -19,7 +19,6 @@ const searchGuestInput = document.querySelector('#search-guest');
 const managerGuestBookings =  document.querySelector('.body__manager__user__section');
 const guestBookingsTitle = document.querySelector('#bookings-title');
 const dateSubmitButton = document.querySelector('.date-submit');
-//const managerDateSubmitButton = document.querySelectorAll('.manager-date-submit');
 const dateValue = document.querySelector('#date-search');
 const calendar = document.querySelector('.calendar');
 const filterButtons = document.getElementsByClassName('filter-buttons');
@@ -35,9 +34,9 @@ let user;
 let guest;
 let manager;
 
-const recievedUsersData = apiRequest.getUsersData();
-const recievedRoomsData = apiRequest.getRoomsData();
-const recievedBookingsData = apiRequest.getBookingsData();
+let recievedUsersData = apiRequest.getUsersData();
+let recievedRoomsData = apiRequest.getRoomsData();
+let recievedBookingsData = apiRequest.getBookingsData();
 
 
 fadeIn.addEventListener('animationend', displayLogin);
@@ -58,34 +57,11 @@ Promise.all([recievedUsersData, recievedRoomsData, recievedBookingsData])
     createUser();
   })
 
-
 window.onclick = function(event) {
   if (event.target === modal) {
     modal.style.display = "none";
   }
 }
-
-
-//not working
-function updateBookingsData() {
-  const updatedData = apiRequest.getBookingsData();
-  Promise.all([updatedData])
-    .then(value => {
-      bookingsData = value[0];
-      console.log(bookingsData);
-      console.log(guest.bookings);
-      createGuest()
-      console.log(bookingsData);
-      console.log(guest.bookings);
-    })
-    //bookings are not updating
-    // .then(createGuest())
-    // .then(console.log(guest.bookings))
-    // .then(displaySearchUserBookings(guest.currentUser.name, 'guest', guestBookingsTitle))
-    .catch(error => console.log(error))
-
-}
-
 
 function createUser() {
   user = new User(usersData, bookingsData, roomsData);
@@ -203,7 +179,7 @@ function displayTodaysRevenue(date) {
 }
 
 function displayPercentOccupied(date) {
-  let totalPercent = manager.getPercentOccupied(date) * 100;
+  let totalPercent = (manager.getPercentOccupied(date) * 100).toFixed(2);
   document.querySelector('.body__manager__total__percent').innerText = `${totalPercent}%`;
 }
 
@@ -213,12 +189,6 @@ function displayManagerSearchResults(e) {
     displaySearchUserBookings(searchGuestInput.value, 'manager', managerGuestBookings);
     document.querySelector('.manager-date-submit').addEventListener('click', showRoomsByDate);
     createGuest();
-
-   // document.querySelector('#manager-guest-spent').insertAdjacentHTML('afterend', stuff)
-   // calendar.classList.remove('hidden');
-    //console.log(guest);
-    //guest.bookings = user.findGuestsBooking(guest)
-   // console.log(guest);
   }
 }
 
@@ -302,15 +272,44 @@ function addBooking(e) {
   } else {
     formatDate =  managerSearchDate.value.split('-').join('/');
   }
-
-  const bookingDetails = {
-    "userID": guest.currentUser.id,
-    "date": formatDate,
-    roomNumber
+  if (!compareDates(formatDate)) {
+    alert ('You cannot book a room for a date that has already occured.')
+  } else {
+    const bookingDetails = {
+      "userID": guest.currentUser.id,
+      "date": formatDate,
+      roomNumber
+    }
+    let onSuccess = () => {
+      getUpdatedBookings()
+    }
+    apiRequest.postBookingData(bookingDetails, onSuccess);
+    alert ('This room has been booked!');
   }
-  apiRequest.postBookingData(bookingDetails);
-  alert ('This room has been booked!')
-  //guest.bookARoom(roomNumber, guest.currentUser, dateValue.value);
+}
+
+//displaySearchUserBookings(searchGuestInput.value, 'manager', managerGuestBookings);
+
+//how to do either
+
+function getUpdatedBookings() {
+  recievedBookingsData = apiRequest.getBookingsData();
+  recievedBookingsData
+    .then(value => {
+      bookingsData = value;
+      user.bookings = value;
+      guest.bookings = createGuestBookings(guest);
+     displayRefetch();
+    })
+}
+
+function displayRefetch() {
+  if (!dateValue.value) {
+    displaySearchUserBookings(searchGuestInput.value, 'manager', managerGuestBookings);
+  } else {
+    displaySearchUserBookings(guest.currentUser.name, 'guest', guestBookingsTitle);
+    displayGuestTotalSpent(guest);
+  }
 }
 
 function deleteBooking(e) {
@@ -321,8 +320,10 @@ function deleteBooking(e) {
   if (!compareDates(bookingToDelete.date)) {
     alert ('Cannot cancel a past reservation!')
   } else {
-    console.log(bookingToDelete);
-    apiRequest.deleteBookingData(bookingToDelete, updateBookingsData)
+    let onSuccess = () => {
+      getUpdatedBookings();
+    }
+    apiRequest.deleteBookingData(bookingToDelete, onSuccess)
     alert ('Your booking has been deleted!')
   }
 }
@@ -355,6 +356,8 @@ function showRoomsByDate(e) {
   addBookButtonEventListeners()
 }
 
-// function searchForAvailability() {
-//   manager.searchAvailability(date)
-// }
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
