@@ -179,7 +179,7 @@ function displayTodaysRevenue(date) {
 }
 
 function displayPercentOccupied(date) {
-  let totalPercent = manager.getPercentOccupied(date) * 100;
+  let totalPercent = (manager.getPercentOccupied(date) * 100).toFixed(2);
   document.querySelector('.body__manager__total__percent').innerText = `${totalPercent}%`;
 }
 
@@ -288,6 +288,10 @@ function addBooking(e) {
   }
 }
 
+//displaySearchUserBookings(searchGuestInput.value, 'manager', managerGuestBookings);
+
+//how to do either
+
 function getUpdatedBookings() {
   recievedBookingsData = apiRequest.getBookingsData();
   recievedBookingsData
@@ -295,9 +299,17 @@ function getUpdatedBookings() {
       bookingsData = value;
       user.bookings = value;
       guest.bookings = createGuestBookings(guest);
-      displaySearchUserBookings(guest.currentUser.name, 'guest', guestBookingsTitle);
-      displayGuestTotalSpent(guest);
+     displayRefetch();
     })
+}
+
+function displayRefetch() {
+  if (!dateValue.value) {
+    displaySearchUserBookings(searchGuestInput.value, 'manager', managerGuestBookings);
+  } else {
+    displaySearchUserBookings(guest.currentUser.name, 'guest', guestBookingsTitle);
+    displayGuestTotalSpent(guest);
+  }
 }
 
 function deleteBooking(e) {
