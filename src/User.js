@@ -8,12 +8,7 @@ class User {
   searchAvailability(date) {
     const bookedRoomsOnDate = this.findBookedRooms(date);
     const availableRoomsOnDate = this.filterBookedRooms(bookedRoomsOnDate);
-    if (!availableRoomsOnDate.length) {
-      //do this in index.js
-      return (`We are deeply sorry that we do not have any rooms available on ${date}`)
-    } else {
-      return availableRoomsOnDate;
-    }
+    return availableRoomsOnDate;
   }
 
   findBookedRooms(date) {
