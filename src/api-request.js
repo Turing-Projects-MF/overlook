@@ -21,24 +21,26 @@ const apiRequest = {
   },
 
   postBookingData(booking) {
-    fetch('https://fe-apps.herokuapp.com/api/v1/overlook/1904/bookings/bookings', {
+    return fetch('https://fe-apps.herokuapp.com/api/v1/overlook/1904/bookings/bookings', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(booking)
     })
+      .then(response => response.json())
       .catch(error => console.log(error))
   },
 
   deleteBookingData(booking, callback) {
-    fetch('https://fe-apps.herokuapp.com/api/v1/overlook/1904/bookings/bookings', {
+    return fetch('https://fe-apps.herokuapp.com/api/v1/overlook/1904/bookings/bookings', {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(booking)
     })
+      .then(response => response.json())
       .then(callback())
       .catch(error => console.log(error))
   }
