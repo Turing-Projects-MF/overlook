@@ -331,10 +331,20 @@ main {
     margin-left: 5%;
     width: 100%;
   }
-  .body__manager__user__wrapper {
-    margin-right: 55px;
-  }
+  // .body__manager__user__wrapper {
+  //   margin-right: 55px;
+  // }
   .wrapper {
     @include column-flex;
+  }
+  .body__guest__user__booking {
+    margin-bottom: 10px;
+  }
+
+  .body__manager__user__section, .body__manager__user__wrapper {
+    display: block;
+    margin-left: 0;
+    margin-right: auto;
+    width: 85%;
   }
 }
