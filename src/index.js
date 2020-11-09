@@ -127,13 +127,14 @@ function checkPassword() {
 
 function displayDashboard(e) {
   e.preventDefault();
+  const today = getTodaysDate();
   if (!checkPassword() || !checkUsername()) {
     alert ('You username and password did not match our system. Please re-enter');
     return
   }
   if (loginUsername.value === 'manager') {
     createManager();
-    displayManagerDashboard("2020/04/22");
+    displayManagerDashboard(today);
   } else if (loginUsername.value.includes('customer')) {
     createGuest();
     displayGuestDashboard();
@@ -172,7 +173,7 @@ function displayManagerDashboard(date) {
 function displayGuestDashboard() {
   handleGuestClassDisplay();
   displaySearchUserBookings(guest.currentUser.name, 'guest', guestBookingsTitle);
-  displayGuestTotalSpent();
+  displayGuestTotalSpent(guest);
 }
 
 function handleManagerClassDisplay() {
@@ -189,11 +190,15 @@ function handleGuestClassDisplay() {
 
 function displayAvailableRooms(date) {
   const availableRooms = manager.searchAvailability(date);
-  document.querySelector('.body__manager__available__rooms').innerText = `${availableRooms.length}`;
+  if (!availableRooms.length) {
+    alert (`We are sorry to inform you that all rooms are booked on ${date}.`)
+  } else {
+    document.querySelector('.body__manager__available__rooms').innerText = `${availableRooms.length}`;
+  }
 }
 
 function displayTodaysRevenue(date) {
-  const totalRevenue =  manager.getTodaysRevenue(date);
+  const totalRevenue =  manager.getTodaysRevenue(date).toFixed(2);
   document.querySelector('.body__manager__total__revenue').innerText = `$${totalRevenue}`;
 }
 
@@ -256,9 +261,12 @@ function chooseDate(e) {
   e.preventDefault();
   const formatDateValue = dateValue.value.split('-').join('/');
   const availableRooms = user.searchAvailability(formatDateValue);
-  domUpdate.clearBookingsDetails()
-
-  displayGuestSearchResults(availableRooms, formatDateValue);
+  if (!availableRooms.length) {
+    alert (`We are sorry to inform you that all rooms are booked on ${formatDateValue}. \n Please choose another date`)
+  } else {
+    domUpdate.clearBookingsDetails()
+    displayGuestSearchResults(availableRooms, formatDateValue);
+  }
 }
 //invoke in manage dashboards
 function getTodaysDate() {
@@ -309,6 +317,7 @@ function deleteBooking(e) {
   const identifyBooking = e.target.classList;
   const bookingNumber = Number(identifyBooking[1]);
   const bookingToDelete = user.findBookingToDelete(bookingNumber);
+  console.log(bookingToDelete);
   if (!compareDates(bookingToDelete.date)) {
     alert ('Cannot cancel a past reservation!')
   } else {
