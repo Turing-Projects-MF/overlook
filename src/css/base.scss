@@ -1,28 +1,35 @@
 /* This is an example of using Sass, otherwise plain CSS works too*/
-$primary-background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
-$primary-text-color: #A2DED0;
-$dashboard-background-color: #D4D0AB;
+@import "_variables";
+@import "_mixins";
 
 html, body {
   height: 100%;
   width: cover;
+  font-family: 'Roboto', sans-serif;
 }
 
 body {
   background-image: url('../../assets/hotel-background.jpg');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center center;
+  @include position-images;
   background-attachment: fixed;
   h1 {
     color: $primary-text-color;
-
   }
+}
+
+nav {
+  display: flex;
+  justify-content: space-around;
+}
+
+form {
+  margin-top: 20px;
 }
 
 .hidden {
   display: none;
 }
+
 // LOGIN SCREEN
 /* Full-width input fields */
 input[type=text], input[type=password] {
@@ -35,7 +42,7 @@ input[type=text], input[type=password] {
 }
 
 /* Set a style for all buttons */
-button {
+.open-modal-button, .login-button {
   background-color: #4CAF50;
   color: white;
   padding: 14px 20px;
@@ -45,7 +52,7 @@ button {
   width: 100%;
 }
 
-button:hover {
+.open-modal-button:hover, .login-button:hover {
   opacity: 0.8;
 }
 
@@ -55,18 +62,6 @@ button:hover {
   padding: 10px 18px;
   background-color: #f44336;
 }
-
-/* Center the image and position the close button */
-// .imgcontainer {
-//  text-align: center;
-//   margin: 24px 0 12px 0;
-//   position: relative;
-// }
-
-// img.avatar {
-//   width: 40%;
-//   border-radius: 50%;
-//  }
 
 .container {
   padding: 16px;
@@ -100,46 +95,6 @@ span.psw {
   width: 80%; /* Could be more or less, depending on screen size */
 }
 
-// /* The Close Button (x) */
-// .close {
-//   position: absolute;
-//   right: 25px;
-//   top: 0;
-//   color: #000;
-//   font-size: 35px;
-//   font-weight: bold;
-// }
-
-.close:hover,
-.close:focus {
-  color: red;
-  cursor: pointer;
-}
-
-/* Add Zoom Animation */
-.animate {
-  -webkit-animation: animatezoom 0.6s;
-  animation: animatezoom 0.6s
-}
-
-@-webkit-keyframes animatezoom {
-  from {-webkit-transform: scale(0)}
-  to {-webkit-transform: scale(1)}
-}
-
-@keyframes animatezoom {
-  from {transform: scale(0)}
-  to {transform: scale(1)}
-}
-
-
-/* Change styles for span and cancel button on extra small screens */
-// @media screen and (max-width: 300px) {
-//   span.psw {
-//      display: block;
-//      float: none;
-//   }
-// }
 
 //Dashboards
 .body__manager__dash {
@@ -177,8 +132,7 @@ span.psw {
 }
 
 .body__manager__user__wrapper, .main__guest__wrapper {
-  display: flex;
-  flex-direction: column;
+  @include column-flex;
   margin: 0 2.5% 0 5%;
   width: 50%;
   .body__manager__user__wrapper__article, .main__guest__wrapper__article {
@@ -203,10 +157,10 @@ span.psw {
   margin: 10px 5% 0 2.5%;
   height: auto;
   .body__manager__user__booking, .body__guest__user__booking {
-    background-color: #c6c29b;
+    background-color: $room-card-color;
     margin: 20px 2.5%;
     min-height: 100px;
-    box-shadow: 5px 10px #888888;
+    box-shadow: 5px 10px $box-shadow-color;
   }
 }
 
@@ -216,7 +170,6 @@ span.psw {
 
 .main__guest__wrapper, .body__guest__user__booking {
   color: #3455DB;
-  font-family: 'Roboto', sans-serif;
   font-size: 24px;
 }
 
@@ -225,37 +178,65 @@ span.psw {
 }
 
 #guest-bookings {
-  display: flex;
-  flex-direction: column;
+  @include column-flex;
   align-items: center;
   height: 1015px;
   overflow: auto;
 }
 
 .body__guest__user__booking {
-  background-color: #c6c29b;
+  background-color: $room-card-color;
   height: 120px;
   width: 98%;
 
-  box-shadow: 5px 10px #888888;
+  box-shadow: 5px 10px $box-shadow-color;
 }
 
 label {
   color: $primary-text-color;
 }
 
+
+
+.body__guest__user__booking, .body__manager__user__booking {
+  position: relative;
+}
+
+.delete {
+  background-image: url("https://i.imgur.com/VkyustM.png");
+  @include position-buttons;
+}
+
+.book-room {
+  background-image: url("https://i.imgur.com/UNQ7KOg.png");
+  @include position-buttons;
+}
+
+.book-room:hover {
+  background-image: url('https://i.imgur.com/jua0har.png');
+}
+
+.delete:hover {
+  background-image: url('https://i.imgur.com/vDnQW0k.png');
+}
+
+.delete:active, .book-room:active {
+  transform: translateY(2px)
+}
+
+//filter buttons
 .filter-buttons {
-  background-position: center center; /* Center the image */
-  background-repeat: no-repeat; /* Do not repeat the image */
-  background-size: cover;
+  @include position-images;
   color: #96281B;
-  font-family: 'Roboto', sans-serif;
   font-size: 40px;
   font-weight: bolder;
   text-shadow: 1px 1px #FFFAFA;
   border-radius: 5px;
   padding: 100px;
   margin: 0 0 20px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
 }
 
 #suite {
@@ -291,6 +272,7 @@ main {
   margin: 0 2.5%;
 }
 
+//animations
 .fade-in {
   animation: fadeIn ease 5s;
   -webkit-animation: fadeIn ease 5s;
@@ -325,10 +307,26 @@ main {
   }
 }
 
+.animate {
+  -webkit-animation: animatezoom 0.6s;
+  animation: animatezoom 0.6s
+}
+
+@-webkit-keyframes animatezoom {
+  from {-webkit-transform: scale(0)}
+  to {-webkit-transform: scale(1)}
+}
+
+@keyframes animatezoom {
+  from {transform: scale(0)}
+  to {transform: scale(1)}
+}
+
+
+//media queries
 @media (max-width: 950px) {
   .body__manager__user__view {
-    display: flex;
-    flex-direction: column;
+    @include column-flex;
     align-items: center;
     margin-left: 5%;
     width: 100%;
@@ -337,7 +335,6 @@ main {
     margin-right: 55px;
   }
   .wrapper {
-    display: flex;
-    flex-direction: column;
+    @include column-flex;
   }
 }

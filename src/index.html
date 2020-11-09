@@ -6,14 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body>
-    <div class="fade-in">
-      <h1 class="body__welcome">Welcome to Overlook</h1>
-   </div>
+    <nav>
+      <div class="fade-in">
+        <h1 class="body__welcome">Welcome to Overlook</h1>
+      </div>
+      <form class="calendar hidden">
+        <label for="date-search">Search Availability:</label>
+        <input type="date" id="date-search" name="date-search">
+        <input class="date-submit" type="submit">
+      </form>
+   </nav>
     <section class="body__login hidden">
       <!-- add hidden to section to hide body -->
 
       <!-- login form modal -->
-      <button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Login</button>
+      <button class="open-modal-button" style="width:auto;">Login</button>
       <div id="id01" class="modal">
         <form class="modal-content animate">
         <!-- <form class="modal-content animate" action="/action_page.php" method="post"> -->
@@ -77,6 +84,9 @@
           </div>
           <section class="body__guest__user__view">
             <section class="body__guest__user__section" id="guest-bookings">
+
+              <article class="body__guest__user__booking" id="bookings-title">Your Bookings</article>
+
               <!-- <button class="body__guest__user__booking">
                 BOOKING DETAILS
               </button>
@@ -94,16 +104,16 @@
 
         <section class="body__guest__user__section" id="filter-section">
           <div class="main__guest__filter__button">
-            <button class="filter-buttons" id="suite" title="Filter By Suites">Suites</button>
+            <button class="filter-buttons" id="suite" title="Filter By Suites" value="suite">Suites</button>
           </div>
           <div class="main__guest__filter__button">
-            <button class="filter-buttons" id="sing-room" title="Filter By Single Rooms">Single Rooms</button>
+            <button class="filter-buttons" id="sing-room" title="Filter By Single Rooms" value="single room">Single Rooms</button>
           </div>
           <div class="main__guest__filter__button">
-            <button class="filter-buttons" id="res-suite" title="Filter By Residential Suites">Residential<br>Suites</button>
+            <button class="filter-buttons" id="res-suite" title="Filter By Residential Suites" value="residential suite">Residential<br>Suites</button>
           </div>
           <div class="main__guest__filter__button">
-            <button class="filter-buttons" id="jun-suite" title="Filter By Junior Suites">Junior Suites</button>
+            <button class="filter-buttons" id="jun-suite" title="Filter By Junior Suites" value="junior suite">Junior Suites</button>
           </div>
         </section>
      </section>

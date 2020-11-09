@@ -9,6 +9,7 @@ class User {
     const bookedRoomsOnDate = this.findBookedRooms(date);
     const availableRoomsOnDate = this.filterBookedRooms(bookedRoomsOnDate);
     if (!availableRoomsOnDate.length) {
+      //do this in index.js
       return (`We are deeply sorry that we do not have any rooms available on ${date}`)
     } else {
       return availableRoomsOnDate;
@@ -26,15 +27,13 @@ class User {
     return this.rooms.filter(room => !bookedRooms.includes(room.number));
   }
 
+  //don't need bookARoom
   bookARoom(roomNumber, user, date) {
     const roomToBook = this.rooms.find(room => room.number === roomNumber);
     this.bookings.push({
-      //delete id and roomServiceCharges can't POST it
-      "id": "5fwrgu4i7k55hl6t7",
       "userID": user.id,
       "date": date,
-      "roomNumber": roomToBook.number,
-      "roomServiceCharges": []
+      "roomNumber": roomToBook.number
     });
     return this.bookings[this.bookings.length - 1];
   }
@@ -78,6 +77,12 @@ class User {
 
   findGuestByName(name) {
     return this.users.find(user => user.name === name);
+  }
+
+  findBookingToDelete(bookingID) {
+    return  this.bookings.find(booking => {
+      return booking.id === bookingID;
+    })
   }
 }
 
