@@ -16,7 +16,7 @@ const managerDashboard = document.querySelector('.body__manager ');
 const main = document.querySelector('main');
 const guestBookingview = document.querySelectorAll('.body__guest__user__view')[1];
 const searchGuestInput = document.querySelector('#search-guest');
-const managerGuestBookings =  document.querySelector('.body__manager__user__section');
+const managerGuestBookings = document.querySelector('.body__manager__user__section');
 const guestBookingsTitle = document.querySelector('#bookings-title');
 const dateSubmitButton = document.querySelector('.date-submit');
 const dateValue = document.querySelector('#date-search');
@@ -25,7 +25,6 @@ const filterButtons = document.getElementsByClassName('filter-buttons');
 const deleteButtons = document.getElementsByClassName('delete');
 const bookButtons = document.getElementsByClassName('book-room');
 const openModalButton = document.querySelector('.open-modal-button');
-
 
 let usersData;
 let roomsData;
@@ -37,7 +36,6 @@ let manager;
 let recievedUsersData = apiRequest.getUsersData();
 let recievedRoomsData = apiRequest.getRoomsData();
 let recievedBookingsData = apiRequest.getBookingsData();
-
 
 fadeIn.addEventListener('animationend', displayLogin);
 loginButton.addEventListener('click', displayDashboard);
@@ -57,7 +55,7 @@ Promise.all([recievedUsersData, recievedRoomsData, recievedBookingsData])
     createUser();
   })
 
-window.onclick = function(event) {
+window.onclick = function (event) {
   if (event.target === modal) {
     modal.style.display = "none";
   }
@@ -68,12 +66,13 @@ function createUser() {
 }
 
 function displayLogin() {
+  bodyLogin.classList.add('flex')
   bodyLogin.classList.remove('hidden');
   getTodaysDate()
 }
 
 function showLoginPrompts() {
-  document.getElementById('id01').style.display = 'block';
+  modal.style.display = 'block';
 }
 
 function checkUsername() {
@@ -91,7 +90,6 @@ function checkUsername() {
   }
 }
 
-
 function checkPassword() {
   const password = loginPassword.value;
   if (password === 'overlook2020') {
@@ -105,7 +103,7 @@ function displayDashboard(e) {
   e.preventDefault();
   const today = getTodaysDate();
   if (!checkPassword() || !checkUsername()) {
-    alert ('You username and password did not match our system. Please re-enter');
+    alert('You username and password did not match our system. Please re-enter');
     return
   }
   if (loginUsername.value === 'manager') {
@@ -134,14 +132,14 @@ function createGuestBookings(guest) {
 }
 
 function createManager() {
-  if (loginUsername.value === `manager` && loginPassword.value === 'overlook2020')  {
+  if (loginUsername.value === `manager` && loginPassword.value === 'overlook2020') {
     manager = new Manager(usersData, bookingsData, roomsData);
   }
 }
 
 function displayManagerDashboard(date) {
   handleManagerClassDisplay();
-  displayAvailableRooms(date);
+  displayManagerAvailableRooms(date);
   displayTodaysRevenue(date);
   displayPercentOccupied(date);
 }
@@ -164,17 +162,16 @@ function handleGuestClassDisplay() {
   calendar.classList.remove('hidden');
 }
 
-function displayAvailableRooms(date) {
+function displayManagerAvailableRooms(date) {
   const availableRooms = manager.searchAvailability(date);
-  if (!availableRooms.length) {
-    alert (`We are sorry to inform you that all rooms are booked on ${date}.`)
-  } else {
+  // if (!availableRooms.length) {
+  //   alert(`We are sorry to inform you that all rooms are booked on ${date}.`)
+  // } else {
     document.querySelector('.body__manager__available__rooms').innerText = `${availableRooms.length}`;
-  }
 }
 
 function displayTodaysRevenue(date) {
-  const totalRevenue =  manager.getTodaysRevenue(date).toFixed(2);
+  const totalRevenue = manager.getTodaysRevenue(date).toFixed(2);
   document.querySelector('.body__manager__total__revenue').innerText = `$${totalRevenue}`;
 }
 
@@ -194,7 +191,6 @@ function displayManagerSearchResults(e) {
 
 function displaySearchUserBookings(name, htmlTag, selector) {
   const guestDetails = formatUserBookings(name);
-
   const guestBookings = domUpdate.displayGuestBookings(guestDetails, htmlTag)
   if (htmlTag === 'guest') {
     selector.insertAdjacentHTML('afterend', guestBookings)
@@ -231,14 +227,18 @@ function chooseDate(e) {
   e.preventDefault();
   const formatDateValue = dateValue.value.split('-').join('/');
   const availableRooms = user.searchAvailability(formatDateValue);
-  if (!availableRooms.length) {
-    alert (`We are sorry to inform you that all rooms are booked on ${formatDateValue}. \n Please choose another date`)
+  if (compareDates(formatDateValue)) {
+    if (!availableRooms.length) {
+      alert(`We are sorry to inform you that all rooms are booked on ${formatDateValue}. \n Please choose another date`)
+    } else {
+      domUpdate.clearBookingsDetails()
+      displayGuestSearchResults(availableRooms, formatDateValue);
+    }
   } else {
-    domUpdate.clearBookingsDetails()
-    displayGuestSearchResults(availableRooms, formatDateValue);
+    alert ('Please pick a date in the future')
   }
 }
-//invoke in manage dashboards
+
 function getTodaysDate() {
   let today = new Date();
   const dd = String(today.getDate()).padStart(2, '0');
@@ -270,10 +270,10 @@ function addBooking(e) {
   if (dateValue.value !== '') {
     formatDate = dateValue.value.split('-').join('/');
   } else {
-    formatDate =  managerSearchDate.value.split('-').join('/');
+    formatDate = managerSearchDate.value.split('-').join('/');
   }
   if (!compareDates(formatDate)) {
-    alert ('You cannot book a room for a date that has already occured.')
+    alert('You cannot book a room for a date that has already occured.')
   } else {
     const bookingDetails = {
       "userID": guest.currentUser.id,
@@ -284,13 +284,9 @@ function addBooking(e) {
       getUpdatedBookings()
     }
     apiRequest.postBookingData(bookingDetails, onSuccess);
-    alert ('This room has been booked!');
+    alert('This room has been booked!');
   }
 }
-
-//displaySearchUserBookings(searchGuestInput.value, 'manager', managerGuestBookings);
-
-//how to do either
 
 function getUpdatedBookings() {
   recievedBookingsData = apiRequest.getBookingsData();
@@ -299,7 +295,7 @@ function getUpdatedBookings() {
       bookingsData = value;
       user.bookings = value;
       guest.bookings = createGuestBookings(guest);
-     displayRefetch();
+      displayRefetch();
     })
 }
 
@@ -316,15 +312,14 @@ function deleteBooking(e) {
   const identifyBooking = e.target.classList;
   const bookingNumber = Number(identifyBooking[1]);
   const bookingToDelete = user.findBookingToDelete(bookingNumber);
-  console.log(bookingToDelete);
   if (!compareDates(bookingToDelete.date)) {
-    alert ('Cannot cancel a past reservation!')
+    alert('Cannot cancel a past reservation!')
   } else {
     let onSuccess = () => {
       getUpdatedBookings();
     }
     apiRequest.deleteBookingData(bookingToDelete, onSuccess)
-    alert ('Your booking has been deleted!')
+    alert('Your booking has been deleted!')
   }
 }
 
