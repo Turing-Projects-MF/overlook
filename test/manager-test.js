@@ -120,4 +120,12 @@ describe('Manager', () => {
   it('should have a list of all rooms', () => {
     expect(manager.rooms).to.deep.equal(rooms);
   });
+
+  it('should get today\s revenue', () => {
+    expect(manager.getTodaysRevenue("2020/04/22")).to.equal(358.4)
+  });
+
+  it('should get the percent of hotel occupied', () => {
+    expect(manager.getPercentOccupied("2020/04/22")).to.equal(0.25);
+  });
 });
