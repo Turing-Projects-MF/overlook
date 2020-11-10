@@ -5,6 +5,7 @@ import Guest from './Guest';
 import Manager from './Manager';
 import apiRequest from './api-request';
 import domUpdate from './dom-update';
+import svgAnimation from './svg';
 import Chart from 'chart.js';
 
 const modal = document.getElementById('id01');
@@ -60,6 +61,12 @@ window.onclick = function (event) {
   if (event.target === modal) {
     modal.style.display = "none";
   }
+}
+
+window.onload = loadBackground
+
+function loadBackground() {
+  document.querySelector('head').insertAdjacentHTML('afterend', svgAnimation)
 }
 
 function createUser() {
@@ -144,18 +151,18 @@ function createChart() {
   new Chart(document.getElementById("doughnut-chart"), {
     type: 'doughnut',
     data: {
-      labels: ["Rooms Available", "Rooms Booked"],
+      labels: ["Rooms Booked", "Rooms Available"],
       datasets: [
         {
           label: "Percent Rooms Booked",
-          backgroundColor: ["#3e95cd", "#8e5ea2"],
-          data: [availableRooms.length, (25 - availableRooms.length)]
+          backgroundColor: ["#8e5ea2", "#3e95cd"],
+          data: [(25 - availableRooms.length), availableRooms.length]
         }
       ]
     },
     options: {
       title: {
-        display: true,
+        display: false,
         text: 'Hotel Capacity'
       }
     }
@@ -237,6 +244,7 @@ function formatUserBookings(name) {
       if (room.number === booking.roomNumber) {
         format.roomType = room.roomType;
         format.costPerNight = room.costPerNight;
+        format.bidet = room.bidet;
       }
     })
     formatDetails.push(format);
@@ -246,19 +254,20 @@ function formatUserBookings(name) {
 
 function displayGuestTotalSpent() {
   const totalSpent = guest.calculateTotalSpent(guest.bookings);
-  document.querySelector('.main__guest__wrapper__article').innerHTML = `You have spent $${totalSpent}<br>Thank you for your patronage!`;
+  const firstName = guest.currentUser.name.split(' ')
+  document.querySelector('.main__guest__wrapper__article').innerHTML = `${firstName[0]}, you have spent $${totalSpent}.<br> We greatly appreciate your business!`;
 }
 
 function chooseDate(e) {
   e.preventDefault();
-  const formatDateValue = dateValue.value.split('-').join('/');
-  const availableRooms = user.searchAvailability(formatDateValue);
-  if (compareDates(formatDateValue)) {
+  const formatDate = formatDateValue(dateValue.value);
+  const availableRooms = user.searchAvailability(formatDate);
+  if (compareDates(formatDate)) {
     if (!availableRooms.length) {
-      alert(`We are sorry to inform you that all rooms are booked on ${formatDateValue}. \n Please choose another date`)
+      alert(`We are sorry to inform you that all rooms are booked on ${formatDate}. \n Please choose another date`)
     } else {
       domUpdate.clearBookingsDetails();
-      displayGuestSearchResults(availableRooms, formatDateValue);
+      displayGuestSearchResults(availableRooms, formatDate);
     }
   } else {
     alert ('Please pick a date in the future');
@@ -282,11 +291,15 @@ function displayGuestSearchResults(rooms, date) {
 }
 
 function filterRooms(e) {
-  const formatDate = dateValue.value.split('-').join('/');
-  const roomType = e.target.value;
-  const filteredRooms = guest.filterRoomByType(roomType, formatDate);
-  domUpdate.clearBookingsDetails();
-  displayGuestSearchResults(filteredRooms, formatDate);
+  if ( dateValue.value === '') {
+    alert ('Please choose a date before filtering')
+  } else {
+    const formatDate = formatDateValue(dateValue.value);
+    const roomType = e.target.value;
+    const filteredRooms = guest.filterRoomByType(roomType, formatDate);
+    domUpdate.clearBookingsDetails();
+    displayGuestSearchResults(filteredRooms, formatDate);
+  }
 }
 
 function addBooking(e) {
@@ -294,9 +307,9 @@ function addBooking(e) {
   const roomNumber = Number(e.target.id);
   let formatDate;
   if (dateValue.value !== '') {
-    formatDate = dateValue.value.split('-').join('/');
+    formatDate = formatDateValue(dateValue.value);
   } else {
-    formatDate = managerSearchDate.value.split('-').join('/');
+    formatDate = formatDateValue(managerSearchDate.value);
   }
   if (!compareDates(formatDate)) {
     alert('You cannot book a room for a date that has already occured.')
@@ -370,7 +383,7 @@ function addDeleteButtonEventListeners() {
 function showRoomsByDate(e) {
   e.preventDefault();
   const managerSearchDate = document.querySelector('#manager-date-search');
-  const formatDate = managerSearchDate.value.split('-').join('/');
+  const formatDate = formatDateValue(managerSearchDate.value);
   if (compareDates(formatDate)) {
     const availableRoomsOnDate = manager.searchAvailability(formatDate);
     const searchHTML = domUpdate.displaySearchResults(availableRoomsOnDate);
@@ -379,7 +392,10 @@ function showRoomsByDate(e) {
   } else {
     alert ('Please pick a date in the future');
   }
+}
 
+function formatDateValue(date) {
+  return date.split('-').join('/');
 }
 
 
