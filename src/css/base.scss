@@ -12,6 +12,8 @@ body {
   background-image: url('../../assets/hotel-background.jpg');
   @include position-images;
   background-attachment: fixed;
+  position: relative;
+
   h1 {
     color: $primary-text-color;
   }
@@ -20,10 +22,13 @@ body {
 nav {
   display: flex;
   justify-content: space-around;
+  form {
+    margin-top: 20px;
+  }
 }
 
-form {
-  margin-top: 20px;
+main {
+  width: $full-width;
 }
 
 .hidden {
@@ -31,9 +36,8 @@ form {
 }
 
 // LOGIN SCREEN
-/* Full-width input fields */
 input[type=text], input[type=password] {
-  width: 100%;
+  width: $full-width;
   padding: 12px 20px;
   margin: 8px 0;
   display: inline-block;
@@ -41,22 +45,27 @@ input[type=text], input[type=password] {
   box-sizing: border-box;
 }
 
-/* Set a style for all buttons */
 .open-modal-button, .login-button {
-  background-color: #4CAF50;
+  background-color: $primary-text-color;
+  border-radius: $border-radius;
   color: white;
   padding: 14px 20px;
   margin: 8px 0;
   border: none;
   cursor: pointer;
-  width: 100%;
+  width: $full-width;
 }
 
 .open-modal-button:hover, .login-button:hover {
   opacity: 0.8;
 }
 
-/* Extra styles for the cancel button */
+.open-modal-button {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
 .cancelbtn {
   width: auto;
   padding: 10px 18px;
@@ -72,29 +81,25 @@ span.psw {
   padding-top: 16px;
 }
 
-/* The Modal (background) */
 .modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
+  display: none;
+  position: fixed;
+  z-index: 1;
   left: 0;
   top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  width: $full-width;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0,0.4);
   padding-top: 60px;
+  .modal-content {
+    background-color: #fefefe;
+    margin: 5% auto 15% auto;
+    border: 1px solid #888;
+    width: 80%;
+  }
 }
-
-/* Modal Content/Box */
-.modal-content {
-  background-color: #fefefe;
-  margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
-  border: 1px solid #888;
-  width: 80%; /* Could be more or less, depending on screen size */
-}
-
 
 //Dashboards
 .body__manager__dash {
@@ -107,7 +112,7 @@ span.psw {
   flex-wrap: wrap;
   article {
     flex-grow: 1;
-    height: 225px;
+    height: 270px;
     width: 300px;
     border: solid;
   }
@@ -120,7 +125,6 @@ span.psw {
   transition: width 0.4s ease-in-out;
 }
 
-/* When the input field gets focus, change its width to 100% */
 #search-guest:focus {
   //update in media query
   width: 30%;
@@ -137,7 +141,7 @@ span.psw {
   width: 50%;
   .body__manager__user__wrapper__article, .main__guest__wrapper__article {
     background-color: $dashboard-background-color;
-    width: 100%;
+    width: $full-width;
   }
 }
 
@@ -152,7 +156,7 @@ span.psw {
 
 .body__manager__user__section, .body__guest__user__section, .main__guest__wrapper {
   background-color: $dashboard-background-color;
-  border-radius: 5px;
+  border-radius: $border-radius;
   width: 50%;
   margin: 10px 5% 0 2.5%;
   height: auto;
@@ -165,11 +169,11 @@ span.psw {
 }
 
 .body__guest__user__section, .main__guest__wrapper {
-  width: 100%;
+  width: $full-width;
 }
 
 .main__guest__wrapper, .body__guest__user__booking {
-  color: #3455DB;
+  color: #006060;
   font-size: 24px;
 }
 
@@ -195,8 +199,6 @@ span.psw {
 label {
   color: $primary-text-color;
 }
-
-
 
 .body__guest__user__booking, .body__manager__user__booking {
   position: relative;
@@ -227,16 +229,28 @@ label {
 //filter buttons
 .filter-buttons {
   @include position-images;
-  color: #96281B;
-  font-size: 40px;
-  font-weight: bolder;
-  text-shadow: 1px 1px #FFFAFA;
-  border-radius: 5px;
+  background-color: black;
+  opacity: 0.9;
+  border-radius: $border-radius;
   padding: 100px;
   margin: 0 0 20px 0;
   border: none;
   cursor: pointer;
-  width: 100%;
+  width: $full-width;
+}
+
+.main__guest__filter__button {
+  position: relative;
+}
+
+.filter-text {
+  position: absolute;
+  top: 50%;
+  left: 2%;
+  color: #96281B;
+  font-size: 40px;
+  font-weight: bolder;
+  text-shadow: 1px 1px #FFFAFA;
 }
 
 #suite {
@@ -259,16 +273,13 @@ label {
   background-color: transparent;
 }
 
-main {
-  width: 100%;
-}
 .wrapper {
   display: flex;
-  width: 100%;
+  width: $full-width;
 }
 
 #bookings-view {
-  width: 100%;
+  width: $full-width;
   margin: 0 2.5%;
 }
 
@@ -329,11 +340,9 @@ main {
     @include column-flex;
     align-items: center;
     margin-left: 5%;
-    width: 100%;
+    width: $full-width;
   }
-  // .body__manager__user__wrapper {
-  //   margin-right: 55px;
-  // }
+
   .wrapper {
     @include column-flex;
   }

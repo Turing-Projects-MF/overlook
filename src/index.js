@@ -5,6 +5,7 @@ import Guest from './Guest';
 import Manager from './Manager';
 import apiRequest from './api-request';
 import domUpdate from './dom-update';
+import Chart from 'chart.js';
 
 const modal = document.getElementById('id01');
 const bodyLogin = document.querySelector('.body__login');
@@ -137,11 +138,36 @@ function createManager() {
   }
 }
 
+function createChart() {
+  const today = getTodaysDate()
+  const availableRooms = manager.searchAvailability(today);
+  new Chart(document.getElementById("doughnut-chart"), {
+    type: 'doughnut',
+    data: {
+      labels: ["Rooms Available", "Rooms Booked"],
+      datasets: [
+        {
+          label: "Percent Rooms Booked",
+          backgroundColor: ["#3e95cd", "#8e5ea2"],
+          data: [availableRooms.length, (25 - availableRooms.length)]
+        }
+      ]
+    },
+    options: {
+      title: {
+        display: true,
+        text: 'Hotel Capacity'
+      }
+    }
+});
+}
+
 function displayManagerDashboard(date) {
   handleManagerClassDisplay();
   displayManagerAvailableRooms(date);
   displayTodaysRevenue(date);
-  displayPercentOccupied(date);
+ //displayPercentOccupied(date);
+ createChart()
 }
 
 function displayGuestDashboard() {
@@ -191,9 +217,9 @@ function displayManagerSearchResults(e) {
 
 function displaySearchUserBookings(name, htmlTag, selector) {
   const guestDetails = formatUserBookings(name);
-  const guestBookings = domUpdate.displayGuestBookings(guestDetails, htmlTag)
+  const guestBookings = domUpdate.displayGuestBookings(guestDetails, htmlTag);
   if (htmlTag === 'guest') {
-    selector.insertAdjacentHTML('afterend', guestBookings)
+    selector.insertAdjacentHTML('afterend', guestBookings);
   } else {
     selector.innerHTML = guestBookings;
   }
@@ -231,11 +257,11 @@ function chooseDate(e) {
     if (!availableRooms.length) {
       alert(`We are sorry to inform you that all rooms are booked on ${formatDateValue}. \n Please choose another date`)
     } else {
-      domUpdate.clearBookingsDetails()
+      domUpdate.clearBookingsDetails();
       displayGuestSearchResults(availableRooms, formatDateValue);
     }
   } else {
-    alert ('Please pick a date in the future')
+    alert ('Please pick a date in the future');
   }
 }
 
@@ -249,8 +275,8 @@ function getTodaysDate() {
 
 function displayGuestSearchResults(rooms, date) {
   const searchResults = domUpdate.displaySearchResults(rooms);
-  guestBookingsTitle.insertAdjacentHTML('afterend', searchResults)
-  document.querySelector('.main__guest__wrapper__article').innerText = `Search Results:`
+  guestBookingsTitle.insertAdjacentHTML('afterend', searchResults);
+  document.querySelector('.main__guest__wrapper__article').innerText = `Search Results:`;
   document.querySelector('.body__guest__user__booking').innerText = `Available rooms on ${date}`;
   addBookButtonEventListeners();
 }
@@ -258,9 +284,9 @@ function displayGuestSearchResults(rooms, date) {
 function filterRooms(e) {
   const formatDate = dateValue.value.split('-').join('/');
   const roomType = e.target.value;
-  const filteredRooms = guest.filterRoomByType(roomType, formatDate)
+  const filteredRooms = guest.filterRoomByType(roomType, formatDate);
   domUpdate.clearBookingsDetails();
-  displayGuestSearchResults(filteredRooms, formatDate)
+  displayGuestSearchResults(filteredRooms, formatDate);
 }
 
 function addBooking(e) {
@@ -281,7 +307,7 @@ function addBooking(e) {
       roomNumber
     }
     let onSuccess = () => {
-      getUpdatedBookings()
+      getUpdatedBookings();
     }
     apiRequest.postBookingData(bookingDetails, onSuccess);
     alert('This room has been booked!');
@@ -318,38 +344,45 @@ function deleteBooking(e) {
     let onSuccess = () => {
       getUpdatedBookings();
     }
-    apiRequest.deleteBookingData(bookingToDelete, onSuccess)
-    alert('Your booking has been deleted!')
+    apiRequest.deleteBookingData(bookingToDelete, onSuccess);
+    alert('Your booking has been deleted!');
   }
 }
 
 function compareDates(bookingDate) {
   const todaysDate = getTodaysDate().split('/').join('-');
   const booking = bookingDate.split('/').join('-');
-  return new Date(booking) > new Date(todaysDate)
+  return new Date(booking) > new Date(todaysDate);
 }
 
 function addBookButtonEventListeners() {
   for (let i = 0; i < bookButtons.length; i++) {
-    bookButtons[i].addEventListener('click', addBooking)
+    bookButtons[i].addEventListener('click', addBooking);
   }
 }
 
 function addDeleteButtonEventListeners() {
   for (let i = 0; i < deleteButtons.length; i++) {
-    deleteButtons[i].addEventListener('click', deleteBooking)
+    deleteButtons[i].addEventListener('click', deleteBooking);
   }
 }
 
 function showRoomsByDate(e) {
   e.preventDefault();
-  const managerSearchDate = document.querySelector('#manager-date-search')
+  const managerSearchDate = document.querySelector('#manager-date-search');
   const formatDate = managerSearchDate.value.split('-').join('/');
-  const availableRoomsOnDate = manager.searchAvailability(formatDate);
-  const searchHTML = domUpdate.displaySearchResults(availableRoomsOnDate);
-  document.querySelector('.manager-calendar').insertAdjacentHTML('afterend', searchHTML);
-  addBookButtonEventListeners()
+  if (compareDates(formatDate)) {
+    const availableRoomsOnDate = manager.searchAvailability(formatDate);
+    const searchHTML = domUpdate.displaySearchResults(availableRoomsOnDate);
+    document.querySelector('.manager-calendar').insertAdjacentHTML('afterend', searchHTML);
+    addBookButtonEventListeners();
+  } else {
+    alert ('Please pick a date in the future');
+  }
+
 }
+
+
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
