@@ -22,17 +22,6 @@ class User {
     return this.rooms.filter(room => !bookedRooms.includes(room.number));
   }
 
-  //don't need bookARoom
-  bookARoom(roomNumber, user, date) {
-    const roomToBook = this.rooms.find(room => room.number === roomNumber);
-    this.bookings.push({
-      "userID": user.id,
-      "date": date,
-      "roomNumber": roomToBook.number
-    });
-    return this.bookings[this.bookings.length - 1];
-  }
-
   cancelBooking(bookedRoom) {
     const reservation = this.bookings.find(booking => booking === bookedRoom);
     this.bookings.forEach(booking => {
@@ -71,7 +60,8 @@ class User {
   }
 
   findGuestByName(name) {
-    return this.users.find(user => user.name === name);
+    name = name.toLowerCase();
+    return this.users.find(user => user.name.toLowerCase() === name);
   }
 
   findBookingToDelete(bookingID) {
