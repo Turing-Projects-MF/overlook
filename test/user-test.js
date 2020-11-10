@@ -130,9 +130,21 @@ describe('User', () => {
     expect(user.searchAvailability("2020/01/10")).to.deep.equal([rooms[0], rooms[3]]);
   });
 
+  it('should be able to search availability by a different date', () => {
+    expect(user.searchAvailability("2020/02/16")).to.deep.equal([rooms[0], rooms[1], rooms[2]]);
+  });
+
   it('should be able to remove a booking', () => {
     user.cancelBooking(bookings[3]);
     let bookedRooms = [bookings[0], bookings[1], bookings[2]];
+
+    expect(user.bookings).to.deep.equal(bookedRooms);
+  });
+
+  it('should be able to remove another booking', () => {
+    user.cancelBooking(bookings[3]);
+    user.cancelBooking(bookings[2]);
+    let bookedRooms = [bookings[0], bookings[1]];
 
     expect(user.bookings).to.deep.equal(bookedRooms);
   });
@@ -146,7 +158,12 @@ describe('User', () => {
     expect(user.findGuestsBooking(findGuest)).to.deep.equal([bookings[0]]);
   });
 
-  it('should be able to a guest\s bookings and total spent by their name', () => {
+  it('should find a another guest\s bookings', () => {
+    const findGuest = user.findGuestByName("Rocio Schuster");
+    expect(user.findGuestsBooking(findGuest)).to.deep.equal([bookings[1]]);
+  });
+
+  it('should be able to find a guest\s bookings and total spent by their name', () => {
     const searchGuest = user.searchForGuest("Leatha Ullrich");
 
     expect(searchGuest).to.deep.equal({
@@ -156,9 +173,27 @@ describe('User', () => {
     })
   })
 
+  it('should be able to find another guest\s bookings and total spent by their name', () => {
+    const searchGuest = user.searchForGuest("Rocio Schuster");
+
+    expect(searchGuest).to.deep.equal({
+      guest: users[1].name,
+      bookings: [bookings[1]],
+      spent: 477.38
+    })
+  })
+
   it('should be able to return removed booking', () => {
     const bookedRoom = bookings[3];
-    const cancelReservation = user.cancelBooking(bookings[3]);
+    const cancelReservation = user.cancelBooking(bookedRoom);
+
+    expect(cancelReservation).to.deep.equal(bookedRoom);
+  });
+
+  it('should be able to return another removed booking', () => {
+    user.cancelBooking(bookings[3]);
+    const bookedRoom = bookings[2];
+    const cancelReservation = user.cancelBooking(bookedRoom);
 
     expect(cancelReservation).to.deep.equal(bookedRoom);
   });
@@ -171,11 +206,23 @@ describe('User', () => {
     expect(user.findGuestsBooking(users[0])).to.deep.equal([bookings[0]])
   });
 
+  it('should find a another guest\s bookings', () => {
+    expect(user.findGuestsBooking(users[1])).to.deep.equal([bookings[1]])
+  });
+
   it('should find a guest by their name', () => {
     expect(user.findGuestByName("Leatha Ullrich")).to.deep.equal(users[0])
   });
 
+  it('should find a guest by their name', () => {
+    expect(user.findGuestByName("Rocio Schuster")).to.deep.equal(users[1])
+  });
+
   it('should find a booking to delete', () => {
     expect(user.findBookingToDelete(1)).to.deep.equal(bookings[0])
+  });
+
+  it('should find another booking to delete', () => {
+    expect(user.findBookingToDelete(2)).to.deep.equal(bookings[1])
   });
 });
