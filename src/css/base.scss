@@ -1,19 +1,27 @@
 /* This is an example of using Sass, otherwise plain CSS works too*/
 @import "_variables";
 @import "_mixins";
+@import url(https://fonts.googleapis.com/css?family=Pathway+Gothic+One);
 
-html, body {
+html,
+body {
   height: 100%;
-  width: cover;
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
+}
+
+svg {
+  position: fixed;
+  z-index: -1;
 }
 
 body {
-  background-image: url('../../assets/hotel-background.jpg');
-  @include position-images;
-  background-attachment: fixed;
+  background: -webkit-radial-gradient(
+    center,
+    ellipse cover,
+    #ffffff 0%,
+    #f2efd9 100%
+  );
   position: relative;
-
   h1 {
     color: $primary-text-color;
   }
@@ -31,12 +39,19 @@ main {
   width: $full-width;
 }
 
+.body__welcome {
+  font-size: 44px;
+  color: $primary-text-color;
+  margin-top: 22px;
+}
+
 .hidden {
   display: none;
 }
 
 // LOGIN SCREEN
-input[type=text], input[type=password] {
+input[type="text"],
+input[type="password"] {
   width: $full-width;
   padding: 12px 20px;
   margin: 8px 0;
@@ -45,7 +60,8 @@ input[type=text], input[type=password] {
   box-sizing: border-box;
 }
 
-.open-modal-button, .login-button {
+.open-modal-button,
+.login-button {
   background-color: $primary-text-color;
   border-radius: $border-radius;
   color: white;
@@ -56,8 +72,8 @@ input[type=text], input[type=password] {
   width: $full-width;
 }
 
-.open-modal-button:hover, .login-button:hover {
-  opacity: 0.8;
+.login-button:hover {
+  opacity: 0.9;
 }
 
 .open-modal-button {
@@ -90,8 +106,8 @@ span.psw {
   width: $full-width;
   height: 100%;
   overflow: auto;
-  background-color: rgb(0,0,0);
-  background-color: rgba(0,0,0,0.4);
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.4);
   padding-top: 60px;
   .modal-content {
     background-color: #fefefe;
@@ -103,7 +119,7 @@ span.psw {
 
 //Dashboards
 .body__manager__dash {
-  background-color: #D4D0AB;
+  background-color: #d4d0ab;
   margin: auto;
   width: 90%;
   text-align: center;
@@ -135,73 +151,90 @@ span.psw {
   display: flex;
 }
 
-.body__manager__user__wrapper, .main__guest__wrapper {
+.body__manager__user__wrapper,
+.main__guest__wrapper {
   @include column-flex;
   margin: 0 2.5% 0 5%;
   width: 50%;
-  .body__manager__user__wrapper__article, .main__guest__wrapper__article {
+  .body__manager__user__wrapper__article,
+  .main__guest__wrapper__article {
     background-color: $dashboard-background-color;
     width: $full-width;
   }
 }
 
-#manager-guest-name, .main__guest__wrapper__article {
+.main__guest__wrapper__article {
+  color: #e0ffff;
+  display: flex;
+  justify-content: center;
+}
+
+#manager-guest-name,
+.main__guest__wrapper__article {
+  background-color: $room-card-color;
   height: 50px;
   margin: 10px 0;
+  border-radius: $border-radius;
+  @include center-items;
 }
 
 #manager-guest-spent {
   height: 100px;
 }
 
-.body__manager__user__section, .body__guest__user__section, .main__guest__wrapper {
+.body__manager__user__section,
+.body__guest__user__section,
+.main__guest__wrapper {
   background-color: $dashboard-background-color;
   border-radius: $border-radius;
   width: 50%;
   margin: 10px 5% 0 2.5%;
   height: auto;
-  .body__manager__user__booking, .body__guest__user__booking {
+  .body__manager__user__booking,
+  .body__guest__user__booking {
     background-color: $room-card-color;
     margin: 20px 2.5%;
     min-height: 100px;
     box-shadow: 5px 10px $box-shadow-color;
+    border-radius: $border-radius;
+    position: relative;
+    flex-direction: column;
+    @include center-items;
   }
 }
 
-.body__guest__user__section, .main__guest__wrapper {
+.body__guest__user__section,
+.main__guest__wrapper {
   width: $full-width;
 }
 
-.main__guest__wrapper, .body__guest__user__booking {
+.main__guest__wrapper,
+.body__guest__user__booking {
   color: #006060;
   font-size: 24px;
-}
-
-.body__guest__user__booking {
-  height: 100%;
 }
 
 #guest-bookings {
   @include column-flex;
   align-items: center;
-  height: 1015px;
+  max-height: 775px;
   overflow: auto;
 }
 
 .body__guest__user__booking {
   background-color: $room-card-color;
+  height: 100%;
   height: 120px;
   width: 98%;
-
+  margin-bottom: 10px;
   box-shadow: 5px 10px $box-shadow-color;
+  display: flex;
+  flex-grow: 1;
+  flex-wrap: wrap;
 }
 
 label {
   color: $primary-text-color;
-}
-
-.body__guest__user__booking, .body__manager__user__booking {
-  position: relative;
 }
 
 .delete {
@@ -215,22 +248,23 @@ label {
 }
 
 .book-room:hover {
-  background-image: url('https://i.imgur.com/jua0har.png');
+  background-image: url("https://i.imgur.com/jua0har.png");
 }
 
 .delete:hover {
-  background-image: url('https://i.imgur.com/vDnQW0k.png');
+  background-image: url("https://i.imgur.com/vDnQW0k.png");
 }
 
-.delete:active, .book-room:active {
-  transform: translateY(2px)
+.delete:active,
+.book-room:active {
+  transform: translateY(2px);
 }
 
 //filter buttons
 .filter-buttons {
   @include position-images;
   background-color: black;
-  opacity: 0.9;
+  opacity: 0.95;
   border-radius: $border-radius;
   padding: 100px;
   margin: 0 0 20px 0;
@@ -247,10 +281,10 @@ label {
   position: absolute;
   top: 50%;
   left: 2%;
-  color: #96281B;
+  color: #96281b;
   font-size: 40px;
   font-weight: bolder;
-  text-shadow: 1px 1px #FFFAFA;
+  text-shadow: 1px 1px #fffafa;
 }
 
 #suite {
@@ -293,46 +327,179 @@ label {
 }
 @keyframes fadeIn {
   0% {
-    opacity:0;
+    opacity: 0;
   }
   100% {
-    opacity:1;
+    opacity: 1;
   }
 }
 
 @-moz-keyframes fadeIn {
   0% {
-    opacity:0;
+    opacity: 0;
   }
   100% {
-    opacity:1;
+    opacity: 1;
   }
 }
 
 @-webkit-keyframes fadeIn {
   0% {
-    opacity:0;
+    opacity: 0;
   }
   100% {
-    opacity:1;
+    opacity: 1;
   }
 }
 
 .animate {
   -webkit-animation: animatezoom 0.6s;
-  animation: animatezoom 0.6s
+  animation: animatezoom 0.6s;
 }
 
 @-webkit-keyframes animatezoom {
-  from {-webkit-transform: scale(0)}
-  to {-webkit-transform: scale(1)}
+  from {
+    -webkit-transform: scale(0);
+  }
+  to {
+    -webkit-transform: scale(1);
+  }
 }
 
 @keyframes animatezoom {
-  from {transform: scale(0)}
-  to {transform: scale(1)}
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
 }
 
+@-webkit-keyframes rotate-right {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@-webkit-keyframes rotate-left {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(-360deg);
+  }
+}
+
+@-webkit-keyframes hover {
+  0% {
+    -webkit-transform: translateY(0%);
+  }
+  50% {
+    -webkit-transform: translateY(5%);
+  }
+  100% {
+    -webkit-transform: translateY(0%);
+  }
+}
+
+@-webkit-keyframes pull {
+  0% {
+    -webkit-transform: scaleY(1);
+  }
+  40% {
+    -webkit-transform: scaleY(1.01);
+  }
+  60% {
+    -webkit-transform: scaleY(0.99);
+  }
+  80% {
+    -webkit-transform: scaleY(1.01);
+  }
+  100% {
+    -webkit-transform: scaleY(0.99);
+  }
+  80% {
+    -webkit-transform: scaleY(1.01);
+  }
+  100% {
+    -webkit-transform: scaleY(1);
+  }
+}
+
+@function getSpeed($speed, $type: turtle) {
+  $secs: 360;
+  $divider: 1;
+  @if ($type == turtle) {
+    $divider: 1;
+  } @else if($type == rabbit) {
+    $divider: 10;
+  } @else {
+    $divider: 60;
+  }
+  @if $speed == fastest {
+    $secs: 60 / $divider;
+  } @else if $speed == really-fast {
+    $secs: 120 / $divider;
+  } @else if $speed == fast {
+    $secs: 180 / $divider;
+  } @else if $speed == slow {
+    $secs: 240 / $divider;
+  } @else if $speed == really-slow {
+    $secs: 300 / $divider;
+  } @else if $speed == slowest {
+    $secs: 360 / $divider;
+  }
+  @return #{$secs}s;
+}
+
+#airplane2,
+#airplane1 {
+  @include rotate(turtle, right, fastest);
+}
+
+#countryObjects {
+  @include rotate(turtle, right, slow);
+}
+
+#floatingGlobe {
+  @include rotate(turtle, left, normal);
+}
+
+#globe {
+  $duration: 0;
+  $delay: 0;
+  @include _hover-animation($duration, $delay);
+}
+
+#windmill {
+  @include rotate(flash, right, really-fast, 331px, 201px);
+}
+
+// Clouds
+@for $i from 1 through 3 {
+  #cloud#{$i} {
+    @include _hover-animation(3, $i);
+  }
+}
+
+// Inner Circles
+@for $i from 1 through 5 {
+  $direction: left;
+  $speed: really-fast;
+  #circle#{$i} {
+    @if $i % 2 == 1 {
+      $direction: right;
+      $speed: really-fast;
+    } @else {
+      $direction: left;
+      $speed: slow;
+    }
+    @include rotate(rabbit, $direction, $speed);
+  }
+}
 
 //media queries
 @media (max-width: 950px) {
@@ -350,7 +517,8 @@ label {
     margin-bottom: 10px;
   }
 
-  .body__manager__user__section, .body__manager__user__wrapper {
+  .body__manager__user__section,
+  .body__manager__user__wrapper {
     display: block;
     margin-left: 0;
     margin-right: auto;
