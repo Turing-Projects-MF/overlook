@@ -22,10 +22,10 @@ const managerGuestBookings = document.querySelector('.body__manager__user__secti
 const guestBookingsTitle = document.querySelector('#bookings-title');
 const dateSubmitButton = document.querySelector('.date-submit');
 const dateValue = document.querySelector('#date-search');
-const calendar = document.querySelector('.calendar');
-const filterButtons = document.getElementsByClassName('filter-buttons');
-const deleteButtons = document.getElementsByClassName('delete');
-const bookButtons = document.getElementsByClassName('book-room');
+//const calendar = document.querySelector('.calendar');
+//const filterButtons = document.getElementsByClassName('filter-buttons');
+//const deleteButtons = document.getElementsByClassName('delete');
+//const bookButtons = document.getElementsByClassName('book-room');
 const openModalButton = document.querySelector('.open-modal-button');
 
 let usersData;
@@ -44,10 +44,8 @@ loginButton.addEventListener('click', displayDashboard);
 searchGuestInput.addEventListener('keyup', displayManagerSearchResults);
 openModalButton.addEventListener('click', showLoginPrompts);
 dateSubmitButton.addEventListener('click', chooseDate);
-
-for (let i = 0; i < filterButtons.length; i++) {
-  filterButtons[i].addEventListener('click', filterRooms)
-}
+window.onclick = closeModal;
+window.onload = loadEvents;
 
 Promise.all([recievedUsersData, recievedRoomsData, recievedBookingsData])
   .then(value => {
@@ -57,16 +55,40 @@ Promise.all([recievedUsersData, recievedRoomsData, recievedBookingsData])
     createUser();
   })
 
-window.onclick = function (event) {
-  if (event.target === modal) {
+function loadEvents() {
+  loadBackground();
+  addFilterButtonEventListener();
+}
+
+function loadBackground() {
+  document.querySelector('head').insertAdjacentHTML('afterend', svgAnimation)
+}
+
+function closeModal(e) {
+  if (e.target === modal) {
     modal.style.display = "none";
   }
 }
 
-window.onload = loadBackground
+function addFilterButtonEventListener() {
+  const filterButtons = document.getElementsByClassName('filter-buttons');
+  for (let i = 0; i < filterButtons.length; i++) {
+    filterButtons[i].addEventListener('click', filterRooms)
+  }
+}
 
-function loadBackground() {
-  document.querySelector('head').insertAdjacentHTML('afterend', svgAnimation)
+function addBookButtonEventListeners() {
+  const bookButtons = document.getElementsByClassName('book-room');
+  for (let i = 0; i < bookButtons.length; i++) {
+    bookButtons[i].addEventListener('click', addBooking);
+  }
+}
+
+function addDeleteButtonEventListeners() {
+  const deleteButtons = document.getElementsByClassName('delete');
+  for (let i = 0; i < deleteButtons.length; i++) {
+    deleteButtons[i].addEventListener('click', deleteBooking);
+  }
 }
 
 function createUser() {
@@ -162,19 +184,18 @@ function createChart() {
     },
     options: {
       title: {
-        display: false,
+        display: true,
         text: 'Hotel Capacity'
       }
     }
-});
+  });
 }
 
 function displayManagerDashboard(date) {
   handleManagerClassDisplay();
   displayManagerAvailableRooms(date);
   displayTodaysRevenue(date);
- //displayPercentOccupied(date);
- createChart()
+  createChart()
 }
 
 function displayGuestDashboard() {
@@ -192,25 +213,17 @@ function handleGuestClassDisplay() {
   main.classList.remove('hidden');
   guestBookingview.classList.remove('hidden');
   bodyLogin.classList.add('hidden');
-  calendar.classList.remove('hidden');
+  document.querySelector('.calendar').classList.remove('hidden');
 }
 
 function displayManagerAvailableRooms(date) {
   const availableRooms = manager.searchAvailability(date);
-  // if (!availableRooms.length) {
-  //   alert(`We are sorry to inform you that all rooms are booked on ${date}.`)
-  // } else {
-    document.querySelector('.body__manager__available__rooms').innerText = `${availableRooms.length}`;
+  document.querySelector('.body__manager__available__rooms').innerText = `${availableRooms.length}`;
 }
 
 function displayTodaysRevenue(date) {
   const totalRevenue = manager.getTodaysRevenue(date).toFixed(2);
   document.querySelector('.body__manager__total__revenue').innerText = `$${totalRevenue}`;
-}
-
-function displayPercentOccupied(date) {
-  let totalPercent = (manager.getPercentOccupied(date) * 100).toFixed(2);
-  document.querySelector('.body__manager__total__percent').innerText = `${totalPercent}%`;
 }
 
 function displayManagerSearchResults(e) {
@@ -270,7 +283,7 @@ function chooseDate(e) {
       displayGuestSearchResults(availableRooms, formatDate);
     }
   } else {
-    alert ('Please pick a date in the future');
+    alert('Please pick a date in the future');
   }
 }
 
@@ -291,8 +304,8 @@ function displayGuestSearchResults(rooms, date) {
 }
 
 function filterRooms(e) {
-  if ( dateValue.value === '') {
-    alert ('Please choose a date before filtering')
+  if (dateValue.value === '') {
+    alert('Please choose a date before filtering')
   } else {
     const formatDate = formatDateValue(dateValue.value);
     const roomType = e.target.value;
@@ -362,24 +375,6 @@ function deleteBooking(e) {
   }
 }
 
-function compareDates(bookingDate) {
-  const todaysDate = getTodaysDate().split('/').join('-');
-  const booking = bookingDate.split('/').join('-');
-  return new Date(booking) > new Date(todaysDate);
-}
-
-function addBookButtonEventListeners() {
-  for (let i = 0; i < bookButtons.length; i++) {
-    bookButtons[i].addEventListener('click', addBooking);
-  }
-}
-
-function addDeleteButtonEventListeners() {
-  for (let i = 0; i < deleteButtons.length; i++) {
-    deleteButtons[i].addEventListener('click', deleteBooking);
-  }
-}
-
 function showRoomsByDate(e) {
   e.preventDefault();
   const managerSearchDate = document.querySelector('#manager-date-search');
@@ -390,7 +385,7 @@ function showRoomsByDate(e) {
     document.querySelector('.manager-calendar').insertAdjacentHTML('afterend', searchHTML);
     addBookButtonEventListeners();
   } else {
-    alert ('Please pick a date in the future');
+    alert('Please pick a date in the future');
   }
 }
 
@@ -398,10 +393,8 @@ function formatDateValue(date) {
   return date.split('-').join('/');
 }
 
-
-
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+function compareDates(bookingDate) {
+  const todaysDate = getTodaysDate().split('/').join('-');
+  const booking = bookingDate.split('/').join('-');
+  return new Date(booking) > new Date(todaysDate);
+}
