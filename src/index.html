@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en-US">
+
 <head>
   <meta charset="UTF__8">
   <title>Overlook</title>
   <link type="text/css" href="https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
+
 <body>
   <nav>
     <div class="fade-in">
@@ -36,15 +38,15 @@
   <section class="body__manager hidden">
     <section class="body__manager__dash">
       <article class="body__manager__dash__article" id="rooms-available">
-        <p>Rooms Available Today</p>
+        <p class="body__manager__p">Rooms Available Today</p>
         <aside class="body__manager__available__rooms"></aside>
       </article>
       <article class="body__manager__dash__article" id="today-revenue">
-        <p>Today's Revenue</p>
+        <p class="body__manager__p">Today's Revenue</p>
         <aside class="body__manager__total__revenue"></aside>
       </article>
       <article class="body__manager__dash__article" id="room-occupied">
-          <canvas id="doughnut-chart"></canvas>
+        <canvas id="doughnut-chart"></canvas>
       </article>
     </section>
     <input type="text" aria-required="false" id="search-guest" placeholder="Search..">
