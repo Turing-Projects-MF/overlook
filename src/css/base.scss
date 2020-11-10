@@ -1,4 +1,3 @@
-/* This is an example of using Sass, otherwise plain CSS works too*/
 @import "_variables";
 @import "_mixins";
 @import url(https://fonts.googleapis.com/css?family=Pathway+Gothic+One);
@@ -22,9 +21,6 @@ body {
     #f2efd9 100%
   );
   position: relative;
-  h1 {
-    color: $primary-text-color;
-  }
 }
 
 nav {
@@ -231,6 +227,12 @@ span.psw {
   display: flex;
   flex-grow: 1;
   flex-wrap: wrap;
+}
+
+#doughnut-chart {
+  box-sizing: border-box;
+  height: 250px !important;
+  width: 500px !important;
 }
 
 label {
