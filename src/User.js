@@ -65,7 +65,7 @@ class User {
   }
 
   findBookingToDelete(bookingID) {
-    return  this.bookings.find(booking => {
+    return this.bookings.find(booking => {
       return booking.id === bookingID;
     })
   }
