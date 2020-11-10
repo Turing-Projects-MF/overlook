@@ -129,6 +129,28 @@ span.psw {
     border: solid;
   }
 }
+.body__guest__user__booking {
+  position: relative;
+}
+#rooms-available,
+#today-revenue {
+  display: flex;
+  flex-direction: column;
+}
+
+.body__manager__total__revenue,
+.body__manager__available__rooms{
+  margin-top: 50px;
+}
+
+.body__manager__p {
+  margin-top: 20px;
+  font-size: 24px;
+}
+
+.body__manager__dash__article {
+  font-size: 44px;
+}
 
 #search-guest {
   margin-left: 5%;
