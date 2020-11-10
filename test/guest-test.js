@@ -135,6 +135,11 @@ describe('Guest', () => {
     expect(filteredRoom).to.deep.equal([rooms[2], rooms[3]])
   });
 
+  it('should be able to filter room by another type', () => {
+    const filteredRoom = guest.filterRoomByType('residential suite');
+    expect(filteredRoom).to.deep.equal([rooms[0]]);
+  });
+
   it('should apologize if there is room of that type available', () => {
     const filteredRoom = guest.filterRoomByType('penthouse');
     const message = `We are deeply sorry that we do not have any penthouse\s available`;

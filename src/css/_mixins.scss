@@ -17,3 +17,31 @@
   display: flex;
   flex-direction: column;
 }
+
+@mixin center-items {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin _rotate-animation($direction, $speed, $type) {
+  -webkit-transform: translate3d(0, 0, 0);
+  -webkit-animation: rotate-#{$direction} getSpeed($speed, $type) linear 0s infinite;
+}
+
+@mixin _hover-animation($duration, $delay) {
+  -webkit-transform: translate3d(0, 0, 0);
+  -webkit-animation: hover #{$duration}s linear #{$delay}s infinite;
+}
+
+@mixin _pull-animation($duration, $delay, $x: 200px, $y: 200px) {
+  -webkit-transform: translate3d(0, 0, 0);
+  -webkit-transform-origin: $x $y;
+  -webkit-animation: pull #{$duration}s linear #{$delay}s infinite alternate;
+}
+
+@mixin rotate($type, $direction: left, $speed: slow, $x: 200px, $y: 200px) {
+  -webkit-transform: translate3d(0, 0, 0);
+  -webkit-transform-origin: $x $y;
+  @include _rotate-animation($direction, $speed, $type);
+}

@@ -1,123 +1,103 @@
 <!DOCTYPE html>
 <html lang="en-US">
-  <head>
-    <title>Overlook</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap" rel="stylesheet">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-  </head>
-  <body>
-    <nav>
-      <div class="fade-in">
-        <h1 class="body__welcome">Welcome to Overlook</h1>
-      </div>
-      <form class="calendar hidden">
-        <label for="date-search">Search Availability:</label>
-        <input type="date" id="date-search" name="date-search">
-        <input class="date-submit" type="submit">
-      </form>
-   </nav>
-    <section class="body__login hidden">
-      <!-- add hidden to section to hide body -->
 
-      <!-- login form modal -->
-      <button class="open-modal-button" style="width:auto;">Login</button>
-      <div id="id01" class="modal">
-        <form class="modal-content animate">
-        <!-- <form class="modal-content animate" action="/action_page.php" method="post"> -->
-          <div class="container">
-            <label for="uname"><b>Username</b></label>
-            <input id="login-username" type="text" placeholder="Enter Username" name="uname" required>
-            <label for="psw"><b>Password</b></label>
-            <input id="login-password" type="password" placeholder="Enter Password" name="psw" required>
-            <button class="login-button" type="submit">Login</button>
-          </div>
-        </form>
-      </div>
-    </section>
-    <!-- Manager dashboard -->
-    <section class="body__manager hidden">
-      <!-- add hidden to top section -->
-      <section class="body__manager__dash">
-        <article class="body__manager__dash__article" id="rooms-available">
-          <p>Show Rooms Available</p>
-          <aside class="body__manager__available__rooms"></aside>
-        </article>
-        <article class="body__manager__dash__article" id="today-revenue">
-          <p>Show Today's Revenue</p>
-          <aside class="body__manager__total__revenue"></aside>
-        </article>
-        <article class="body__manager__dash__article" id="room-occupied">
-          <p>Show % Occupied</p>
-          <aside class="body__manager__total__percent"></aside>
-        </article>
-      </section>
+<head>
+  <meta charset="UTF__8">
+  <title>Overlook</title>
+  <link type="text/css" href="https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
 
-      <!-- ARIA LABEL HELP -->
-
-      <input type="text" aria-required="false" id="search-guest" placeholder="Search..">
-      <label for="search-guest">Enter Guest Name</label>
-      <!-- show guest details -->
-      <section class="body__manager__user__view">
-
-        <div class="body__manager__user__wrapper"></div>
-
-        <section class="body__manager__user__section">
-          <!-- <article class="body__manager__user__booking">
-            BOOKING DETAILS
-          </article>
-          <article class="body__manager__user__booking">
-            BOOKING DETAILS
-          </article>
-          <article class="body__manager__user__booking">
-            BOOKING DETAILS
-          </article> -->
-        </section>
-
-      </section>
-    </section>
-    <div class="wrapper">
-      <main class="hidden">
-          <div class="main__guest__wrapper">
-            <article class="main__guest__wrapper__article">
-              TOTAL SPENT
-            </article>
-          </div>
-          <section class="body__guest__user__view">
-            <section class="body__guest__user__section" id="guest-bookings">
-
-              <article class="body__guest__user__booking" id="bookings-title">Your Bookings</article>
-
-              <!-- <button class="body__guest__user__booking">
-                BOOKING DETAILS
-              </button>
-              <button class="body__guest__user__booking">
-                BOOKING DETAILS
-              </button>
-              <button class="body__guest__user__booking">
-                BOOKING DETAILS
-              </button> -->
-            </section>
-          </section>
-      </main>
-
-      <section class="body__guest__user__view hidden" id="bookings-view">
-
-        <section class="body__guest__user__section" id="filter-section">
-          <div class="main__guest__filter__button">
-            <button class="filter-buttons" id="suite" title="Filter By Suites" value="suite">Suites</button>
-          </div>
-          <div class="main__guest__filter__button">
-            <button class="filter-buttons" id="sing-room" title="Filter By Single Rooms" value="single room">Single Rooms</button>
-          </div>
-          <div class="main__guest__filter__button">
-            <button class="filter-buttons" id="res-suite" title="Filter By Residential Suites" value="residential suite">Residential<br>Suites</button>
-          </div>
-          <div class="main__guest__filter__button">
-            <button class="filter-buttons" id="jun-suite" title="Filter By Junior Suites" value="junior suite">Junior Suites</button>
-          </div>
-        </section>
-     </section>
+<body>
+  <nav>
+    <div class="fade-in">
+      <p class="body__welcome">Welcome to Overlook</p>
     </div>
-    <!-- Do not include the index.js or main.bundle.js file here - it is done automatically by the webpack server -->
-  </body>
+    <form class="calendar hidden">
+      <label for="date-search">Search Availability:</label>
+      <input type="date" id="date-search" name="date-search">
+      <input class="date-submit" type="submit">
+    </form>
+  </nav>
+  <section class="body__login hidden">
+    <!-- Login Form -->
+    <button class="open-modal-button" style="width:auto;">Login</button>
+    <div id="id01" class="modal">
+      <form class="modal-content animate">
+        <div class="container">
+          <label for="uname"><b>Username</b></label>
+          <input id="login-username" type="text" placeholder="Enter Username" name="uname" required>
+          <label for="psw"><b>Password</b></label>
+          <input id="login-password" type="password" placeholder="Enter Password" name="psw" required>
+          <button class="login-button" type="submit">Login</button>
+        </div>
+      </form>
+    </div>
+  </section>
+  <!-- Manager Dashboard -->
+  <section class="body__manager hidden">
+    <section class="body__manager__dash">
+      <article class="body__manager__dash__article" id="rooms-available">
+        <p class="body__manager__p">Rooms Available Today</p>
+        <aside class="body__manager__available__rooms"></aside>
+      </article>
+      <article class="body__manager__dash__article" id="today-revenue">
+        <p class="body__manager__p">Today's Revenue</p>
+        <aside class="body__manager__total__revenue"></aside>
+      </article>
+      <article class="body__manager__dash__article" id="room-occupied">
+        <canvas id="doughnut-chart"></canvas>
+      </article>
+    </section>
+    <input type="text" aria-required="false" id="search-guest" placeholder="Search..">
+    <label for="search-guest">Enter Guest Name</label>
+    <section class="body__manager__user__view">
+      <div class="body__manager__user__wrapper"></div>
+      <!-- Manager Search User Bookings Display -->
+      <section class="body__manager__user__section">
+      </section>
+    </section>
+  </section>
+  <!-- Guest Dashbaord -->
+  <div class="wrapper">
+    <main class="hidden">
+      <div class="main__guest__wrapper">
+        <article class="main__guest__wrapper__article">
+          TOTAL SPENT
+        </article>
+      </div>
+      <section class="body__guest__user__view">
+        <section class="body__guest__user__section" id="guest-bookings">
+          <article class="body__guest__user__booking" id="bookings-title">Your Bookings</article>
+        </section>
+      </section>
+    </main>
+    <section class="body__guest__user__view hidden" id="bookings-view">
+      <!-- Filter By Room Type Section -->
+      <section class="body__guest__user__section" id="filter-section">
+        <div class="main__guest__filter__button">
+          <button class="filter-buttons" id="suite" title="Filter By Suites" value="suite"
+            title="Hotel Room with dark bedding"></button>
+          <p class="filter-text">Suites</p>
+        </div>
+        <div class="main__guest__filter__button">
+          <button class="filter-buttons" id="sing-room" title="Filter By Single Rooms" value="single room"
+            title="hotel room with light bedding"></button>
+          <p class="filter-text">Single Rooms</p>
+        </div>
+        <div class="main__guest__filter__button">
+          <button class="filter-buttons" id="res-suite" title="Filter By Residential Suites" value="residential suite"
+            title="Large bed with wooden floors and large window outsite"></button>
+          <p class="filter-text">Residential Suites</p>
+        </div>
+        <div class="main__guest__filter__button">
+          <button class="filter-buttons" id="jun-suite" title="Filter By Junior Suites" value="junior suite"
+            title="Two bed hotel room with white linen"></button>
+          <p class="filter-text">Junior Suites</p>
+        </div>
+      </section>
+    </section>
+  </div>
+</body>
+
 </html>
