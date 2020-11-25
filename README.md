@@ -58,6 +58,7 @@ Create a hotel management tool for hotel customers and staff to manage room book
   * `npm install`
 * To verify that it is setup correctly, run `npm start` in your terminal.
 * Go to `http://localhost:8080/` and the site should display and have functionality.
+* Use "manager" or "customer1" and a password of "overlook" to see different user experiences.
 * Enter `control + c` in your terminal to stop the server at any time.
 </details>
 
